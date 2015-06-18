@@ -5,7 +5,7 @@ import java.util.List;
 
 import v5.game.sokoban.model.T.Direction;
 
-public class Model implements ModelInterface {
+public class Model implements ModelInterface, LogicInterface {
 
 	List<ModelListener> _listeners = new ArrayList<ModelListener>();
 	private Logic _logic = new Logic();
@@ -35,5 +35,17 @@ public class Model implements ModelInterface {
 		} 
 		return false;
 	}
+
+	@Override
+	public boolean setField() {
+//		_logic.setField();		
+		if (_logic.setField()){
+			fireChangedEvent();
+			return true;
+		} 
+		return false;
+	}
+	
+	
 	
 }

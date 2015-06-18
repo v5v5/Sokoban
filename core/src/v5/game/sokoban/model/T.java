@@ -3,7 +3,7 @@ package v5.game.sokoban.model;
 public class T {
 
 	public enum Unit {
-		WALL, BOX, TARGET,
+		WALL, BOX, TARGET, MAN,
 	}
 
 	public enum Direction {

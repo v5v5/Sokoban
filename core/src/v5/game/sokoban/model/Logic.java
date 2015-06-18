@@ -134,4 +134,10 @@ public class Logic implements LogicInterface {
 
 		return true;
 	}
+
+	@Override
+	public boolean setField() {
+		_state.createDefaultField();
+		return true;
+	}
 }

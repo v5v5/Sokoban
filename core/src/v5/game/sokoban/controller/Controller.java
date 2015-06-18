@@ -5,7 +5,7 @@ import v5.game.sokoban.model.Model;
 import v5.game.sokoban.model.T.Direction;
 import v5.game.sokoban.view.View;
 
-public class Controller implements LogicInterface {
+public class Controller implements LogicInterface, ControllerInterface {
 	
 	private Model _model;
 	private View _view;
@@ -19,6 +19,16 @@ public class Controller implements LogicInterface {
 	@Override
 	public boolean moveMan(Direction direction) {
 		return _model.moveMan(direction);
+	}
+
+	@Override
+	public View getView() {
+		return _view;
+	}
+	
+	@Override
+	public boolean setField() {
+		return _model.setField();
 	}
 	
 

@@ -7,49 +7,49 @@ import v5.game.sokoban.model.T.Unit;
 
 public class State {
 
-	T.Unit[][] _field;
-	T.Point _manPosition = new T.Point();
+	Unit[][] _field;
+	Point _manPosition = new Point();
 	private Logic _model;
 
 	State(Logic model) {
 		_model = model;
 	}
 
-	public T.Unit[][] createEmptyField() {
+	public Unit[][] createEmptyField() {
 		_field = new T.Unit[0][0];
 		return _field;
 	}
 
-	public T.Unit[][] createRectangleField(int row, int col) {
+	public Unit[][] createRectangleField(int row, int col) {
 		_field = new T.Unit[row][col];
 		return _field;
 	}
 
-	public T.Unit[][] createDefaultField() {
-		T.Unit[][] _field = new T.Unit[5][10];
+	public Unit[][] createDefaultField() {
+		_field = new Unit[5][10];
 
 		// create walls
 		int row = 0;
 		for (int col = 0; col < _field[row].length; col++) {
-			_field[row][col] = T.Unit.WALL;
+			_field[row][col] = Unit.WALL;
 		}
 		for (int rrow = 1; rrow <= 3; rrow++) {
-			_field[rrow][0] = T.Unit.WALL;
-			_field[rrow][_field[row].length - 1] = T.Unit.WALL;
+			_field[rrow][0] = Unit.WALL;
+			_field[rrow][_field[row].length - 1] = Unit.WALL;
 		}
 		row = _field.length - 1;
 		for (int col = 0; col < _field[row].length; col++) {
-			_field[row][col] = T.Unit.WALL;
+			_field[row][col] = Unit.WALL;
 		}
 
 		// create box
-		_field[2][5] = T.Unit.BOX;
+		_field[2][5] = Unit.BOX;
 
 		// create man
 		_model.setManPosition(2, 2);
 
 		// create target
-		_field[2][7] = T.Unit.TARGET;
+		_field[2][7] = Unit.TARGET;
 
 		return _field;
 	}
@@ -58,7 +58,7 @@ public class State {
 		return _manPosition;
 	}
 	
-	public T.Unit[][] getField() {
+	public Unit[][] getField() {
 		return _field;
 	}
 
