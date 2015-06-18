@@ -1,0 +1,26 @@
+https://metaschool.ru/pub/games/sokoban/sokoban.php
+
+model
+--create field
+--create units:
+	barrier
+	box
+	target
+	men	
+--move men
+--move box
+--target reached (TODO)
+
+controller
+
+view
+--draw units
+
+
+
+
+
+
+
+
+
