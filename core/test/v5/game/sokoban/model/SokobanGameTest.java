@@ -11,7 +11,7 @@ import v5.game.sokoban.model.T.Unit;
 
 public class SokobanGameTest {
 
-	Logic _gameModel;	
+	Logic _gameModel;
 
 	@Before
 	public void setup() {
@@ -44,11 +44,11 @@ public class SokobanGameTest {
 			assertEquals(6, countCols);
 		}
 	}
-	
+
 	@Test
 	public void setUnit() {
 		_gameModel.getState().createRectangleField(11, 11);
-		
+
 		Unit unit = null;
 		try {
 			_gameModel.setUnit(0, 0, Unit.BOX);
@@ -58,36 +58,35 @@ public class SokobanGameTest {
 		}
 		assertEquals(Unit.BOX, unit);
 	}
-	
 
-//	@Test
-//	public void moveMan() {
-//		_gameModel.getState().createRectangleField(5, 10);
-//
-//		int manRow = 2;
-//		int manCol = 1;
-//		T.Point mp = _gameModel.setManPosition(manRow, manCol);
-//
-//		_gameModel.moveMan(T.Direction.RIGHT);
-//
-//		assertEquals(manRow, mp.row);
-//		assertEquals(manCol + 1, mp.col);
-//	}
-//
-//	@Test
-//	public void moveManToRightOnWall() {
-//		_gameModel.getState().createRectangleField(5, 10);
-//
-//		int manRow = 2;
-//		int manCol = 3;
-//
-//		T.Point mp = _gameModel.setManPosition(manRow, manCol);
-//		_gameModel.setWall(manRow, manCol + 1);
-//
-//		_gameModel.moveMan(T.Direction.RIGHT);
-//
-//		assertEquals(manRow, mp.row);
-//		assertEquals(manCol, mp.col);
-//	}
+	// @Test
+	// public void moveMan() {
+	// _gameModel.getState().createRectangleField(5, 10);
+	//
+	// int manRow = 2;
+	// int manCol = 1;
+	// T.Point mp = _gameModel.setManPosition(manRow, manCol);
+	//
+	// _gameModel.moveMan(T.Direction.RIGHT);
+	//
+	// assertEquals(manRow, mp.row);
+	// assertEquals(manCol + 1, mp.col);
+	// }
+	//
+	// @Test
+	// public void moveManToRightOnWall() {
+	// _gameModel.getState().createRectangleField(5, 10);
+	//
+	// int manRow = 2;
+	// int manCol = 3;
+	//
+	// T.Point mp = _gameModel.setManPosition(manRow, manCol);
+	// _gameModel.setWall(manRow, manCol + 1);
+	//
+	// _gameModel.moveMan(T.Direction.RIGHT);
+	//
+	// assertEquals(manRow, mp.row);
+	// assertEquals(manCol, mp.col);
+	// }
 
 }

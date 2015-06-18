@@ -9,7 +9,7 @@ public class Logic implements LogicInterface {
 
 	State _state = new State(this);
 
-	State getState() {
+	public State getState() {
 		return _state;
 	}
 
@@ -135,9 +135,4 @@ public class Logic implements LogicInterface {
 		return true;
 	}
 
-	@Override
-	public boolean setField() {
-		_state.createDefaultField();
-		return true;
-	}
 }

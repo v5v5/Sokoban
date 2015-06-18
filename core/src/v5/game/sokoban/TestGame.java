@@ -1,13 +1,10 @@
 package v5.game.sokoban;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import v5.game.sokoban.controller.Controller;
 import v5.game.sokoban.model.T.Direction;
@@ -20,10 +17,16 @@ public class TestGame {
 
 		final Controller controller = new Controller();
 
-		JFrame frame = new JFrame("Sokoban");
+		JFrame frame = new JFrame("Sokoban") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void paint(java.awt.Graphics g) {
+				controller.repaintView();
+			}
+		};
+		frame.setSize(450, 250);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(400, 300));
 
 		// create inputs
 		frame.addKeyListener(new KeyAdapter() {
@@ -37,6 +40,12 @@ public class TestGame {
 				case KeyEvent.VK_RIGHT:
 					controller.moveMan(Direction.RIGHT);
 					break;
+				case KeyEvent.VK_DOWN:
+					controller.moveMan(Direction.UP);
+					break;
+				case KeyEvent.VK_UP:
+					controller.moveMan(Direction.DOWN);
+					break;
 				default:
 					break;
 				}
@@ -44,19 +53,15 @@ public class TestGame {
 
 		});
 
-		frame.add(panel);
-		frame.pack();
 		frame.setVisible(true);
 
 		// create outputs
-		final Graphics2D graphics = (Graphics2D) panel.getGraphics();
+		final java.awt.Graphics graphics = frame.getGraphics();
 
 		controller.getView().setGraphics(new Graphics() {
 
 			@Override
 			public void fillRect(Unit unit, int x, int y) {
-				 System.out.println("unit: " + unit + ", x: " + x + ", y: " +
-				 y);
 
 				if (unit == null) {
 					graphics.setColor(Color.gray);
@@ -86,6 +91,7 @@ public class TestGame {
 		});
 
 		controller.setField();
+
 	}
 
 }

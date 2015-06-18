@@ -9,7 +9,11 @@ public class Model implements ModelInterface, LogicInterface {
 
 	List<ModelListener> _listeners = new ArrayList<ModelListener>();
 	private Logic _logic = new Logic();
-	
+
+	public Logic getLogic() {
+		return _logic;
+	}
+
 	@Override
 	public void addListener(ModelListener listener) {
 		_listeners.add(listener);
@@ -24,28 +28,21 @@ public class Model implements ModelInterface, LogicInterface {
 	public void fireChangedEvent() {
 		for (ModelListener modelListener : _listeners) {
 			modelListener.onChange(_logic.getState());
-		}		
+		}
 	}
 
 	@Override
 	public boolean moveMan(Direction direction) {
-		if (_logic.moveMan(direction)){
+		if (_logic.moveMan(direction)) {
 			fireChangedEvent();
 			return true;
-		} 
+		}
 		return false;
 	}
 
-	@Override
-	public boolean setField() {
-//		_logic.setField();		
-		if (_logic.setField()){
-			fireChangedEvent();
-			return true;
-		} 
-		return false;
+	public void setField() {
+		_logic.getState().createDefaultField();
+		fireChangedEvent();
 	}
-	
-	
-	
+
 }

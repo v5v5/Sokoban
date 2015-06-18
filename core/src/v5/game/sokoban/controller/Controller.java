@@ -2,14 +2,15 @@ package v5.game.sokoban.controller;
 
 import v5.game.sokoban.model.LogicInterface;
 import v5.game.sokoban.model.Model;
+import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Direction;
 import v5.game.sokoban.view.View;
 
 public class Controller implements LogicInterface, ControllerInterface {
-	
+
 	private Model _model;
 	private View _view;
-	
+
 	public Controller() {
 		_model = new Model();
 		_view = new View();
@@ -25,11 +26,15 @@ public class Controller implements LogicInterface, ControllerInterface {
 	public View getView() {
 		return _view;
 	}
-	
-	@Override
-	public boolean setField() {
-		return _model.setField();
+
+	public void setField() {
+		_model.setField();
 	}
-	
+
+	@Override
+	public void repaintView() {
+		State state = _model.getLogic().getState();
+		_view.onChange(state);
+	}
 
 }

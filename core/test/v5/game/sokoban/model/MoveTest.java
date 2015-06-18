@@ -123,7 +123,7 @@ public class MoveTest {
 	private static Object[] p(boolean expectedCan, Point expectedPos,
 			Direction dir, Point manPos, Unit nearUnit, Point nearPos,
 			Unit farUnit, Point farPos) {
-		
+
 		Object[] o = new Object[] { expectedCan, expectedPos, dir, manPos,
 				nearUnit, nearPos, farUnit, farPos };
 

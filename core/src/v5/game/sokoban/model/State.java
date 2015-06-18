@@ -26,7 +26,7 @@ public class State {
 	}
 
 	public Unit[][] createDefaultField() {
-		_field = new Unit[5][10];
+		_field = new Unit[5][11];
 
 		// create walls
 		int row = 0;
@@ -49,7 +49,7 @@ public class State {
 		_model.setManPosition(2, 2);
 
 		// create target
-		_field[2][7] = Unit.TARGET;
+		_field[2][8] = Unit.TARGET;
 
 		return _field;
 	}
