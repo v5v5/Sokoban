@@ -49,6 +49,9 @@ public class TestGame {
 				case KeyEvent.VK_UP:
 					controller.moveMan(Direction.DOWN);
 					break;
+				case KeyEvent.VK_SPACE:
+					controller.loadField();
+					break;
 				default:
 					break;
 				}
@@ -64,7 +67,7 @@ public class TestGame {
 			@Override
 			public void fillRect(Unit unit, int x, int y) {
 
-				if (unit == null) {
+				if (null == unit) {
 					graphics.setColor(Color.gray);
 				} else {
 
@@ -92,7 +95,7 @@ public class TestGame {
 		});
 
 		// init controller
-//		controller.setFieldDefault();
+		// controller.setFieldDefault();
 		controller.loadField();
 	}
 

@@ -28,6 +28,8 @@ public class View implements ModelListener, ViewInterface {
 		if (null == targets)
 			return;
 		for (Point point : targets) {
+			if (null == point)
+				continue;
 			drawBox(Unit.TARGET, point._row, point._col);
 		}
 	}
@@ -41,11 +43,9 @@ public class View implements ModelListener, ViewInterface {
 	private void drawField(Unit[][] field, Point[] targets) {
 		if (null == field)
 			return;
-		if (null == targets)
-			return;
 		for (int row = 0; row < field.length; row++) {
 			for (int col = 0; col < field[row].length; col++) {
-				if (isTarget(row, col, targets) && (field[row][col] == null)) {
+				if (isTarget(row, col, targets) && (null == field[row][col])) {
 //					drawBox(Unit.TARGET, row, col);
 					continue;
 				}
@@ -56,7 +56,11 @@ public class View implements ModelListener, ViewInterface {
 	}
 
 	private boolean isTarget(int row, int col, Point[] targets) {
+		if (null == targets)
+			return false;
 		for (Point t : targets) {
+			if (null == t)
+				continue;
 			if ((t._row == row) && (t._col == col)) {
 				return true;
 			}
@@ -65,8 +69,13 @@ public class View implements ModelListener, ViewInterface {
 	}
 
 	private void drawBox(Unit unit, int row, int col) {
+//		System.out.println(String.format("unit: %s , row: %d, col: %d", unit , row, col));
+		
+		if (null == _graphics)
+			return;
+
 		int x = ORIGIN_X + col * BOX_SIZE;
-		int y = ORIGIN_Y + row * BOX_SIZE;
+		int y = ORIGIN_Y + row * BOX_SIZE;		
 		_graphics.fillRect(unit, x, y);
 
 	}
