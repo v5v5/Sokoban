@@ -25,24 +25,24 @@ public class View implements ModelListener, ViewInterface {
 	}
 
 	private void drawTargets(Point[] targets) {
-		if (null == targets)
-			return;
+//		if (null == targets)
+//			return;
 		for (Point point : targets) {
-			if (null == point)
-				continue;
+//			if (null == point)
+//				continue;
 			drawBox(Unit.TARGET, point._row, point._col);
 		}
 	}
 
 	private void drawMan(Point pos) {
-		if (null == pos)
-			return;
+//		if (null == pos)
+//			return;
 		drawBox(Unit.MAN, pos._row, pos._col);
 	}
 
 	private void drawField(Unit[][] field, Point[] targets) {
-		if (null == field)
-			return;
+//		if (null == field)
+//			return;
 		for (int row = 0; row < field.length; row++) {
 			for (int col = 0; col < field[row].length; col++) {
 				if (isTarget(row, col, targets) && (null == field[row][col])) {
@@ -56,11 +56,11 @@ public class View implements ModelListener, ViewInterface {
 	}
 
 	private boolean isTarget(int row, int col, Point[] targets) {
-		if (null == targets)
-			return false;
+//		if (null == targets)
+//			return false;
 		for (Point t : targets) {
-			if (null == t)
-				continue;
+//			if (null == t)
+//				continue;
 			if ((t._row == row) && (t._col == col)) {
 				return true;
 			}
