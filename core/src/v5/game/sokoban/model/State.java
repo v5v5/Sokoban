@@ -1,27 +1,25 @@
 package v5.game.sokoban.model;
 
-import v5.game.sokoban.model.E.OutInField;
-import v5.game.sokoban.model.T.Point;
-import v5.game.sokoban.model.T.Unit;
+import java.util.ArrayList;
 
+import v5.game.sokoban.model.E.OutInField;
+import v5.game.sokoban.model.T.Unit;
+import v5.game.sokoban.model.dynamicObjects.BoxObject;
+import v5.game.sokoban.model.dynamicObjects.ManObject;
 
 public class State {
 
+	// fill static objects (Unit.WALL, Unit.TARGET, null)
 	Unit[][] _field = new Unit[0][0];
-	Point _manPos = new Point();
-	Point[] _targets = new Point[0];
-//	Point[] _boxes = new Point[0];
-	private Logic _model;
 
-	State(Logic model) {
-		_model = model;
-	}
+	// dynamic objects (Unit.MAN, Unit.BOX)
+	ManObject _man;
+	ArrayList<BoxObject> _boxes = new ArrayList<BoxObject>();
 
-	public void createEmptyField() {
-	}
-
-	public void createRectangleField(int row, int col) {
-		_field = new Unit[row][col];
+	public void clear() {
+		_field = new Unit[0][0];
+		_man = null;
+		_boxes.clear();
 	}
 
 	public void createDefaultField() {
@@ -42,16 +40,15 @@ public class State {
 		}
 
 		// create boxes
-//		_boxes = new Point[1];
-//		_boxes[0] = new Point(2, 5);
-		_field[3][5] = Unit.BOX;
-
+		addBox(2, 5);
 		// create man
-		_model.setMan(3, 2);
-
+		setMan(3, 2);
 		// create target
-		_targets = new Point[1];
-		_targets[0] = new Point(3, 8);
+		setTarget(3, 8);
+	}
+
+	protected void setTarget(int row, int col) {
+		_field[row][col] = Unit.TARGET;
 	}
 
 	public void createComplexField() {
@@ -72,48 +69,141 @@ public class State {
 		}
 
 		// create boxes
-//		_boxes = new Point[1];
-//		_boxes[0] = new Point(2, 5);
-		_field[2][5] = Unit.BOX;
-		_field[4][5] = Unit.BOX;
+		addBox(2, 5);
+		addBox(4, 5);
 
 		// create man
-		_model.setMan(3, 2);
+		setMan(3, 2);
 
 		// create target
-		_targets = new Point[2];
-		_targets[0] = new Point(2, 8);
-		_targets[1] = new Point(4, 8);
+		setTarget(2, 8);
+		setTarget(4, 8);
 	}
 
-	public Point getMan() {
-		return _manPos;
+	protected void addBox(int row, int col) {
+		if (boxExists(row, col)) {
+			return;
+		}
+		if ((_man != null) && (_man.getRow() == row) && (_man.getCol() == col)) {
+			_man = null;
+		}
+
+		BoxObject box = new BoxObject(this, row, col);
+		_boxes.add(box);
 	}
-	
+
+	private boolean boxExists(int row, int col) {
+		for (BoxObject box : _boxes) {
+			if ((box.getRow() == row) && (box.getCol() == col)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected void setMan(int row, int col) {
+		BoxObject box = getBoxObject(row, col);
+		if (null != box) {
+			_boxes.remove(box);
+		}
+
+		if (_man == null) {
+			_man = new ManObject(this, row, col);
+			return;
+		}
+		if ((_man.getRow() == row) && (_man.getCol() == col)) {
+			return;
+		}
+		_man.setPos(row, col);
+	}
+
+	public BoxObject getBoxObject(int row, int col) {
+		for (BoxObject box : _boxes) {
+			if ((box.getRow() == row) && (box.getCol() == col)) {
+				return box;
+			}
+		}
+		return null;
+	}
+
+	public ManObject getMan() {
+		return _man;
+	}
+
+	protected void setField(int row, int col) {
+		_field = new Unit[row][col];
+	}
+
 	public Unit[][] getField() {
 		return _field;
 	}
 
-	public Unit getUnit(int row, int col) throws OutInField {
-
-		Unit unit = null;
-
-		try {
-			unit = _field[row][col];
-		} catch (Exception e) {
+	protected void setUnit(int row, int col, Unit unit) throws OutInField {
+		if (!checkFieldBounds(row, col)) {
 			throw new OutInField();
 		}
 
-		return unit;
+		if (null == unit) {
+			if ((_man != null) && (_man.getRow() == row)
+					&& (_man.getCol() == col)) {
+				_man = null;
+			}
+			for (BoxObject box : _boxes) {
+				if ((box.getRow() == row) && (box.getCol() == col)) {
+					_boxes.remove(box);
+					break;
+				}
+			}
+			_field[row][col] = null;
+			return;
+		}
+
+		switch (unit) {
+		case WALL:
+			_field[row][col] = Unit.WALL;
+			break;
+		case TARGET:
+			_field[row][col] = Unit.TARGET;
+			break;
+		case BOX:
+			addBox(row, col);
+			break;
+		case MAN:
+			setMan(row, col);
+			break;
+		default:
+			break;
+		}
 	}
 
-//	public Point[] getBoxes() {
-//		return _boxes;
-//	}
-
-	public Point[] getTargets() {
-		return _targets;
+	private boolean checkFieldBounds(int row, int col) {
+		if ((row < 0) || (row >= _field.length) || (col < 0)
+				|| (col >= _field[0].length)) {
+			return false;
+		}
+		return true;
 	}
 
+	public Unit getUnit(int row, int col) throws OutInField {
+		if (!checkFieldBounds(row, col)) {
+			throw new OutInField();
+		}
+
+		if ((_man != null) && (_man.getRow() == row) && (_man.getCol() == col)) {
+			return Unit.MAN;
+		}
+
+		for (BoxObject box : _boxes) {
+			if ((box.getRow() == row) && (box.getCol() == col)) {
+				return Unit.BOX;
+			}
+		}
+
+		return _field[row][col];
+	}
+
+	public ArrayList<BoxObject> getBoxes() {
+		return _boxes;
+	}
 
 }

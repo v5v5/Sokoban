@@ -1,0 +1,3 @@
+cd D:\projects_my\java.courses\java.git\Sokoban\core\bin\
+java v5.game.sokoban.TestGame
+

@@ -78,43 +78,43 @@ public class MoveTest {
 		// test direction up
 		posAfter = new Point(manRow, manCol);
 		list.add(p(false, posAfter, Direction.UP, posBefore, Unit.WALL,
-				new Point(manRow + 1, manCol), null, new Point(manRow + 2,
+				new Point(manRow - 1, manCol), null, new Point(manRow - 2,
 						manCol)));
 
 		posAfter = new Point(manRow, manCol);
 		list.add(p(false, posAfter, Direction.UP, posBefore, Unit.BOX,
-				new Point(manRow + 1, manCol), Unit.WALL, new Point(manRow + 2,
+				new Point(manRow - 1, manCol), Unit.WALL, new Point(manRow - 2,
 						manCol)));
 
 		posAfter = new Point(manRow, manCol);
 		list.add(p(false, posAfter, Direction.UP, posBefore, Unit.BOX,
-				new Point(manRow + 1, manCol), Unit.BOX, new Point(manRow + 2,
+				new Point(manRow - 1, manCol), Unit.BOX, new Point(manRow - 2,
 						manCol)));
 
-		posAfter = new Point(manRow + 1, manCol);
+		posAfter = new Point(manRow - 1, manCol);
 		list.add(p(true, posAfter, Direction.UP, posBefore, Unit.BOX,
-				new Point(manRow + 1, manCol), null, new Point(manRow + 2,
+				new Point(manRow - 1, manCol), null, new Point(manRow - 2,
 						manCol)));
 
 		// test direction down
 		posAfter = new Point(manRow, manCol);
 		list.add(p(false, posAfter, Direction.DOWN, posBefore, Unit.WALL,
-				new Point(manRow - 1, manCol), null, new Point(manRow - 2,
+				new Point(manRow + 1, manCol), null, new Point(manRow + 2,
 						manCol)));
 
 		posAfter = new Point(manRow, manCol);
 		list.add(p(false, posAfter, Direction.DOWN, posBefore, Unit.BOX,
-				new Point(manRow - 1, manCol), Unit.WALL, new Point(manRow - 2,
+				new Point(manRow + 1, manCol), Unit.WALL, new Point(manRow + 2,
 						manCol)));
 
 		posAfter = new Point(manRow, manCol);
 		list.add(p(false, posAfter, Direction.DOWN, posBefore, Unit.BOX,
-				new Point(manRow - 1, manCol), Unit.BOX, new Point(manRow - 2,
+				new Point(manRow + 1, manCol), Unit.BOX, new Point(manRow + 2,
 						manCol)));
 
-		posAfter = new Point(manRow - 1, manCol);
+		posAfter = new Point(manRow + 1, manCol);
 		list.add(p(true, posAfter, Direction.DOWN, posBefore, Unit.BOX,
-				new Point(manRow - 1, manCol), null, new Point(manRow - 2,
+				new Point(manRow + 1, manCol), null, new Point(manRow + 2,
 						manCol)));
 
 		return list;
@@ -148,7 +148,7 @@ public class MoveTest {
 	@Before
 	public void setup() {
 		_logic = new Logic();
-		_logic.getState().createRectangleField(10, 10);
+		_logic.getState().setField(10, 10);
 	}
 
 }

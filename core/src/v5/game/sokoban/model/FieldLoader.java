@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import v5.game.sokoban.model.T.Point;
 import v5.game.sokoban.model.T.Unit;
+import v5.game.sokoban.model.dynamicObjects.BoxObject;
+import v5.game.sokoban.model.dynamicObjects.ManObject;
 
 public class FieldLoader {
 
@@ -19,10 +21,8 @@ public class FieldLoader {
 		ArrayList<String> field = copyToArray(file);
 
 		Point fieldSize = getFieldSize(field);
-		int countTargets = getCountTargets(field);
 
 		state._field = new Unit[fieldSize._row][fieldSize._col];
-		state._targets = new Point[countTargets];
 
 		fillField(field, state);
 	}
@@ -44,20 +44,19 @@ public class FieldLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (reader != null)
+			if (reader != null) {
 				try {
 					reader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}
 		}
 
 		return al;
 	}
 
 	private static void fillField(ArrayList<String> field, State state) {
-		int iTarget = 0;
-
 		String line;
 		for (int row = 0; row < field.size(); row++) {
 			line = field.get(row);
@@ -68,14 +67,13 @@ public class FieldLoader {
 					state._field[row][col] = Unit.WALL;
 					break;
 				case 'b':
-					state._field[row][col] = Unit.BOX;
+					state._boxes.add(new BoxObject(state, row, col));
 					break;
 				case 't':
-					state._targets[iTarget] = new Point(row, col);
-					iTarget++;
+					state._field[row][col] = Unit.TARGET;
 					break;
 				case 'm':
-					state._manPos = new Point(row, col);
+					state._man = new ManObject(state, row, col);
 					break;
 
 				default:
@@ -86,26 +84,14 @@ public class FieldLoader {
 		}
 	}
 
-	private static int getCountTargets(ArrayList<String> field) {
-		int countTargets = 0;
-
-		for (String line : field) {
-			for (int col = 0; col < line.length(); col++) {
-				if ('t' == line.charAt(col)) {
-					countTargets++;
-				}
-			}
-		}
-		return countTargets;
-	}
-
 	private static Point getFieldSize(ArrayList<String> field) {
 		int countRow = 0;
 		int countCol = 0;
 
 		for (String line : field) {
-			if (line.length() > countCol)
+			if (line.length() > countCol) {
 				countCol = line.length();
+			}
 			countRow++;
 		}
 

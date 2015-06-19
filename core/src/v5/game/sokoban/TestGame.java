@@ -44,10 +44,10 @@ public class TestGame {
 					controller.moveMan(Direction.RIGHT);
 					break;
 				case KeyEvent.VK_DOWN:
-					controller.moveMan(Direction.UP);
+					controller.moveMan(Direction.DOWN);
 					break;
 				case KeyEvent.VK_UP:
-					controller.moveMan(Direction.DOWN);
+					controller.moveMan(Direction.UP);
 					break;
 				case KeyEvent.VK_SPACE:
 					controller.loadField();

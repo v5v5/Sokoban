@@ -1,6 +1,6 @@
 package v5.game.sokoban.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -61,45 +61,45 @@ public class MoveBox {
 		posBoxAfter = new Point(manRow, manCol - 1);
 		posUnit = new Point(manRow, manCol - 2);
 
-		list.add(p(posBoxAfter, Direction.LEFT, posMan, Unit.BOX,
-				posBoxBefore, Unit.WALL, posUnit));
+		list.add(p(posBoxAfter, Direction.LEFT, posMan, Unit.BOX, posBoxBefore,
+				Unit.WALL, posUnit));
 
-		list.add(p(posBoxAfter, Direction.LEFT, posMan, Unit.BOX,
-				posBoxBefore, Unit.BOX, posUnit));
+		list.add(p(posBoxAfter, Direction.LEFT, posMan, Unit.BOX, posBoxBefore,
+				Unit.BOX, posUnit));
 
 		posBoxAfter = new Point(manRow, manCol - 2);
-		list.add(p(posBoxAfter, Direction.LEFT, posMan, Unit.BOX,
-				posBoxBefore, null, posUnit));
+		list.add(p(posBoxAfter, Direction.LEFT, posMan, Unit.BOX, posBoxBefore,
+				null, posUnit));
 
 		// test direction up
-		posBoxBefore = new Point(manRow + 1, manCol);
-		posBoxAfter = new Point(manRow + 1, manCol);
-		posUnit = new Point(manRow + 2, manCol);
-
-		list.add(p(posBoxAfter, Direction.UP, posMan, Unit.BOX,
-				posBoxBefore, Unit.WALL, posUnit));
-
-		list.add(p(posBoxAfter, Direction.UP, posMan, Unit.BOX,
-				posBoxBefore, Unit.BOX, posUnit));
-
-		posBoxAfter = new Point(manRow + 2, manCol);
-		list.add(p(posBoxAfter, Direction.UP, posMan, Unit.BOX,
-				posBoxBefore, null, posUnit));
-
-		// test direction down
 		posBoxBefore = new Point(manRow - 1, manCol);
 		posBoxAfter = new Point(manRow - 1, manCol);
 		posUnit = new Point(manRow - 2, manCol);
 
-		list.add(p(posBoxAfter, Direction.DOWN, posMan, Unit.BOX,
-				posBoxBefore, Unit.WALL, posUnit));
+		list.add(p(posBoxAfter, Direction.UP, posMan, Unit.BOX, posBoxBefore,
+				Unit.WALL, posUnit));
 
-		list.add(p(posBoxAfter, Direction.DOWN, posMan, Unit.BOX,
-				posBoxBefore, Unit.BOX, posUnit));
+		list.add(p(posBoxAfter, Direction.UP, posMan, Unit.BOX, posBoxBefore,
+				Unit.BOX, posUnit));
 
 		posBoxAfter = new Point(manRow - 2, manCol);
-		list.add(p(posBoxAfter, Direction.DOWN, posMan, Unit.BOX,
-				posBoxBefore, null, posUnit));
+		list.add(p(posBoxAfter, Direction.UP, posMan, Unit.BOX, posBoxBefore,
+				null, posUnit));
+
+		// test direction down
+		posBoxBefore = new Point(manRow + 1, manCol);
+		posBoxAfter = new Point(manRow + 1, manCol);
+		posUnit = new Point(manRow + 2, manCol);
+
+		list.add(p(posBoxAfter, Direction.DOWN, posMan, Unit.BOX, posBoxBefore,
+				Unit.WALL, posUnit));
+
+		list.add(p(posBoxAfter, Direction.DOWN, posMan, Unit.BOX, posBoxBefore,
+				Unit.BOX, posUnit));
+
+		posBoxAfter = new Point(manRow + 2, manCol);
+		list.add(p(posBoxAfter, Direction.DOWN, posMan, Unit.BOX, posBoxBefore,
+				null, posUnit));
 
 		return list;
 	}
@@ -128,7 +128,7 @@ public class MoveBox {
 	@Before
 	public void setup() {
 		_logic = new Logic();
-		_logic.getState().createRectangleField(10, 10);
+		_logic.getState().setField(10, 10);
 	}
 
 	@Test
@@ -145,7 +145,8 @@ public class MoveBox {
 
 		Unit unit = null;
 		try {
-			unit = _logic.getState().getUnit(_expectedPos._row, _expectedPos._col);
+			unit = _logic.getState().getUnit(_expectedPos._row,
+					_expectedPos._col);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}

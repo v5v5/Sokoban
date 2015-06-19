@@ -24,6 +24,7 @@ DONE
 create mvc & tests
 create controller & view
 create TestGame
+create FieldLoader
 
 
 

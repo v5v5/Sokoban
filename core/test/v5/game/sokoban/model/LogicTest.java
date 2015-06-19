@@ -20,7 +20,7 @@ public class LogicTest {
 
 	@Test
 	public void createEmptyField() {
-		_logic.getState().createEmptyField();
+		_logic.getState().clear();
 		Unit[][] gameField = _logic.getState().getField();
 
 		for (int row = 0; row < gameField.length; row++) {
@@ -33,7 +33,7 @@ public class LogicTest {
 	@Test
 	public void createRectangleField() {
 
-		_logic.getState().createRectangleField(8, 6);
+		_logic.getState().setField(8, 6);
 		Unit[][] gameField = _logic.getState().getField();
 
 		int countRows = gameField.length;
@@ -49,12 +49,12 @@ public class LogicTest {
 
 	@Test
 	public void setUnit() {
-		_logic.getState().createRectangleField(11, 11);
+		_logic.getState().setField(11, 11);
 
 		Unit unit = null;
 		try {
 			_logic.setUnit(0, 0, Unit.BOX);
-			unit = _logic._state.getUnit(0, 0);
+			unit = _logic.getUnit(0, 0);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}
