@@ -25,7 +25,7 @@ public class View implements ModelListener, ViewInterface {
 	}
 
 	private void drawTargets(Point[] targets) {
-		if (targets == null)
+		if (null == targets)
 			return;
 		for (Point point : targets) {
 			drawBox(Unit.TARGET, point._row, point._col);
@@ -33,11 +33,15 @@ public class View implements ModelListener, ViewInterface {
 	}
 
 	private void drawMan(Point pos) {
+		if (null == pos)
+			return;
 		drawBox(Unit.MAN, pos._row, pos._col);
 	}
 
 	private void drawField(Unit[][] field, Point[] targets) {
-		if (field == null)
+		if (null == field)
+			return;
+		if (null == targets)
 			return;
 		for (int row = 0; row < field.length; row++) {
 			for (int col = 0; col < field[row].length; col++) {

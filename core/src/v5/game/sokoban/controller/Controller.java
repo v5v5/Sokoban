@@ -33,8 +33,12 @@ public class Controller implements LogicInterface, ControllerInterface {
 
 	@Override
 	public void repaintView() {
-		State state = _model.getLogic().getState();
-		_view.onChange(state);
+		try {
+			State state = _model.getLogic().getState();			
+			_view.onChange(state);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void loadField() {

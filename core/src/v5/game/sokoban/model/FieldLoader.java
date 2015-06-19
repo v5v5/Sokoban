@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 import v5.game.sokoban.model.T.Point;
 import v5.game.sokoban.model.T.Unit;
@@ -12,24 +17,26 @@ public class FieldLoader {
 
 	static public void load(State state) {
 		
-		String file = "resources/field0.txt";
-
-		Point fieldSize = getFieldSize(file);
-		int countTargets = getCountTargets(file);
+		String file = "/v5/game/sokoban/resources/field0.txt";		
+		
+		URL url = state.getClass().getResource(file);
+		
+		Point fieldSize = getFieldSize(url);
+		int countTargets = getCountTargets(url);
 
 		state._field = new Unit[fieldSize._row][fieldSize._col];
 		state._targets = new Point[countTargets];
 		
-		fillField(file, state);
+		fillField(url, state);
 	}
 
-	private static void fillField(String file, State state) {
+	private static void fillField(URL url, State state) {
 		String line;
 		BufferedReader br = null;
 		int iTarget = 0;
 
 		try {
-			br = new BufferedReader(new FileReader(file));
+			br = new BufferedReader(new InputStreamReader(url.openStream()));
 			int row = 0;
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
@@ -71,13 +78,13 @@ public class FieldLoader {
 		}
 	}
 
-	private static int getCountTargets(String file) {
+	private static int getCountTargets(URL url) {
 		String line;
 		BufferedReader br = null;
 		int countTargets = 0;
 		
 		try {
-			br = new BufferedReader(new FileReader(file));
+			br = new BufferedReader(new InputStreamReader(url.openStream()));
 			while ((line = br.readLine()) != null) {
 				for (int col = 0; col < line.length(); col++) {
 					if ('t' == line.charAt(col)) {
@@ -100,14 +107,14 @@ public class FieldLoader {
 		return countTargets;
 	}
 
-	private static Point getFieldSize(String string) {
+	private static Point getFieldSize(URL url) {
 		int countRow = 0;
 		int countCol = 0;
 
 		String line;
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(string));
+			br = new BufferedReader(new InputStreamReader(url.openStream()));
 			while ((line = br.readLine()) != null) {
 				if (line.length() > countCol)
 					countCol = line.length();
