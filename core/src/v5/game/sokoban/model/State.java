@@ -25,14 +25,44 @@ public class State {
 	}
 
 	public void createDefaultField() {
-		_field = new Unit[5][11];
+		_field = new Unit[7][11];
 
 		// create walls
 		int row = 0;
 		for (int col = 0; col < _field[row].length; col++) {
 			_field[row][col] = Unit.WALL;
 		}
-		for (int rrow = 1; rrow <= 3; rrow++) {
+		for (int rrow = 1; rrow <= 5; rrow++) {
+			_field[rrow][0] = Unit.WALL;
+			_field[rrow][_field[row].length - 1] = Unit.WALL;
+		}
+		row = _field.length - 1;
+		for (int col = 0; col < _field[row].length; col++) {
+			_field[row][col] = Unit.WALL;
+		}
+
+		// create boxes
+//		_boxes = new Point[1];
+//		_boxes[0] = new Point(2, 5);
+		_field[3][5] = Unit.BOX;
+
+		// create man
+		_model.setMan(3, 2);
+
+		// create target
+		_targets = new Point[1];
+		_targets[0] = new Point(3, 8);
+	}
+
+	public void createComplexField() {
+		_field = new Unit[7][11];
+
+		// create walls
+		int row = 0;
+		for (int col = 0; col < _field[row].length; col++) {
+			_field[row][col] = Unit.WALL;
+		}
+		for (int rrow = 1; rrow <= 5; rrow++) {
 			_field[rrow][0] = Unit.WALL;
 			_field[rrow][_field[row].length - 1] = Unit.WALL;
 		}
@@ -45,15 +75,17 @@ public class State {
 //		_boxes = new Point[1];
 //		_boxes[0] = new Point(2, 5);
 		_field[2][5] = Unit.BOX;
+		_field[4][5] = Unit.BOX;
 
 		// create man
-		_model.setMan(2, 2);
+		_model.setMan(3, 2);
 
 		// create target
-		_targets = new Point[1];
+		_targets = new Point[2];
 		_targets[0] = new Point(2, 8);
+		_targets[1] = new Point(4, 8);
 	}
-	
+
 	public Point getMan() {
 		return _manPos;
 	}

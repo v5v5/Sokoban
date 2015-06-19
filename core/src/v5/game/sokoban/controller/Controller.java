@@ -27,8 +27,8 @@ public class Controller implements LogicInterface, ControllerInterface {
 		return _view;
 	}
 
-	public void setField() {
-		_model.setField();
+	public void setFieldDefault() {
+		_model.setFieldDefault();
 	}
 
 	@Override

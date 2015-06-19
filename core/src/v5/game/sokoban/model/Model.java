@@ -40,8 +40,9 @@ public class Model implements ModelInterface, LogicInterface {
 		return false;
 	}
 
-	public void setField() {
-		_logic.getState().createDefaultField();
+	public void setFieldDefault() {
+//		_logic.getState().createDefaultField();
+		_logic.getState().createComplexField();
 		fireChangedEvent();
 	}
 
