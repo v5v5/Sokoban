@@ -54,7 +54,7 @@ public class LogicTest {
 		Unit unit = null;
 		try {
 			_logic.setUnit(0, 0, Unit.BOX);
-			unit = _logic.getUnit(0, 0);
+			unit = _logic._state.getUnit(0, 0);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}

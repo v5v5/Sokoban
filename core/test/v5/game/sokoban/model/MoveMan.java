@@ -35,7 +35,7 @@ public class MoveMan extends MoveTest {
 
 		_logic.moveMan(_dir);
 
-		ManObject man = _logic.getMan();
+		ManObject man = _logic._state.getMan();
 
 		assertEquals(_expectedPos._row, man.getRow());
 		assertEquals(_expectedPos._col, man.getCol());
