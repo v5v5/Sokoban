@@ -20,7 +20,8 @@ public class SokobanGameTest {
 
 	@Test
 	public void createEmptyField() {
-		Unit[][] gameField = _gameModel.getState().createEmptyField();
+		_gameModel.getState().createEmptyField();
+		Unit[][] gameField = _gameModel.getState().getField();
 
 		for (int row = 0; row < gameField.length; row++) {
 			for (int col = 0; col < gameField[row].length; col++) {
@@ -32,7 +33,8 @@ public class SokobanGameTest {
 	@Test
 	public void createRectangleField() {
 
-		Unit[][] gameField = _gameModel.getState().createRectangleField(8, 6);
+		_gameModel.getState().createRectangleField(8, 6);
+		Unit[][] gameField = _gameModel.getState().getField();
 
 		int countRows = gameField.length;
 		assertEquals(8, countRows);

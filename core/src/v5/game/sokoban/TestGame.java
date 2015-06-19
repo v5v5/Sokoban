@@ -15,8 +15,10 @@ public class TestGame {
 
 	public static void main(String[] args) {
 
+		// create controller
 		final Controller controller = new Controller();
 
+		// create ui
 		JFrame frame = new JFrame("Sokoban") {
 			private static final long serialVersionUID = 1L;
 
@@ -27,8 +29,9 @@ public class TestGame {
 		};
 		frame.setSize(450, 250);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 
-		// create inputs
+		// create input data stream
 		frame.addKeyListener(new KeyAdapter() {
 
 			@Override
@@ -53,9 +56,7 @@ public class TestGame {
 
 		});
 
-		frame.setVisible(true);
-
-		// create outputs
+		// create output data stream
 		final java.awt.Graphics graphics = frame.getGraphics();
 
 		controller.getView().setGraphics(new Graphics() {
@@ -90,8 +91,8 @@ public class TestGame {
 
 		});
 
+		// init controller
 		controller.setField();
-
 	}
 
 }

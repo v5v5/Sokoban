@@ -1,4 +1,7 @@
+LINK
 https://metaschool.ru/pub/games/sokoban/sokoban.php
+
+PLAN
 
 model
 --create field
@@ -15,6 +18,12 @@ controller
 
 view
 --draw units
+
+DONE
+
+create mvc & tests
+create controller & view
+create TestGame
 
 
 

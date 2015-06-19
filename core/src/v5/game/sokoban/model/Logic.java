@@ -13,11 +13,11 @@ public class Logic implements LogicInterface {
 		return _state;
 	}
 
-	Point setManPosition(int row, int col) {
-		Point mp = _state._manPosition;
+	Point setMan(int row, int col) {
+		Point mp = _state._manPos;
 		mp._row = row;
 		mp._col = col;
-		return _state.getManPosition();
+		return _state.getMan();
 	}
 
 	void setWall(int row, int col) {
@@ -57,28 +57,56 @@ public class Logic implements LogicInterface {
 		if (!canManMove(direction))
 			return false;
 
-		Point p = _state._manPosition;
+		Point curPos = _state._manPos;
+		Point newPos = new Point();
+		Point newBoxPos = new Point();
 
 		switch (direction) {
 		case RIGHT:
-			setManPosition(p._row, p._col + 1);
+			newPos._row = curPos._row;
+			newPos._col = curPos._col + 1;
+			newBoxPos._row = curPos._row;
+			newBoxPos._col = curPos._col + 2;			
 			break;
 		case LEFT:
-			setManPosition(p._row, p._col - 1);
+			newPos._row = curPos._row;
+			newPos._col = curPos._col - 1;
+			newBoxPos._row = curPos._row;
+			newBoxPos._col = curPos._col - 2;			
 			break;
 		case UP:
-			setManPosition(p._row + 1, p._col);
+			newPos._row = curPos._row + 1;
+			newPos._col = curPos._col;
+			newBoxPos._row = curPos._row + 2;
+			newBoxPos._col = curPos._col;			
 			break;
 		case DOWN:
-			setManPosition(p._row - 1, p._col);
+			newPos._row = curPos._row - 1;
+			newPos._col = curPos._col;
+			newBoxPos._row = curPos._row - 2;
+			newBoxPos._col = curPos._col;			
 			break;
 		}
+		
+		Unit nearUnit = null;
+		try {
+			nearUnit = _state.getUnit(newPos._row, newPos._col);
+		} catch (OutInField e) {
+			e.printStackTrace();
+		}
+		
+		if (Unit.BOX == nearUnit) {
+			_state._field[newPos._row][newPos._col] = null;
+			_state._field[newBoxPos._row][newBoxPos._col] = Unit.BOX;
+		}
+		
+		setMan(newPos._row, newPos._col);
 		return true;
 	}
 
 	boolean canManMove(Direction direction) {
 
-		Point p = _state._manPosition;
+		Point p = _state._manPos;
 		Unit nearUnit = null;
 		Unit farUnit = null;
 

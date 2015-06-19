@@ -69,7 +69,7 @@ public class CanMove extends MoveTest {
 
 	@Test
 	public void canMove() {
-		_gameModel.setManPosition(_manPos._row, _manPos._col);
+		_gameModel.setMan(_manPos._row, _manPos._col);
 
 		Unit unit = null;
 		try {

@@ -25,7 +25,7 @@ public class MoveMan extends MoveTest {
 
 	@Test
 	public void moveMan() {
-		_gameModel.setManPosition(_manPos._row, _manPos._col);
+		_gameModel.setMan(_manPos._row, _manPos._col);
 		try {
 			_gameModel.setUnit(_nearPos._row, _nearPos._col, _nearUnit);
 			_gameModel.setUnit(_farPos._row, _farPos._col, _farUnit);
@@ -35,7 +35,7 @@ public class MoveMan extends MoveTest {
 
 		_gameModel.moveMan(_dir);
 
-		Point p = _gameModel._state.getManPosition();
+		Point p = _gameModel._state.getMan();
 
 		assertEquals(_expectedPos._row, p._row);
 		assertEquals(_expectedPos._col, p._col);
@@ -43,7 +43,7 @@ public class MoveMan extends MoveTest {
 
 	@Test
 	public void canMove() {
-		_gameModel.setManPosition(_manPos._row, _manPos._col);
+		_gameModel.setMan(_manPos._row, _manPos._col);
 
 		Unit unit = null;
 		try {
