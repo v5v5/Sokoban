@@ -19,7 +19,7 @@ import v5.game.sokoban.model.T.Unit;
 @RunWith(Parameterized.class)
 public class MoveBox {
 
-	Logic _gameModel;
+	Logic _logic;
 	static int manRow = 5;
 	static int manCol = 5;
 
@@ -127,25 +127,25 @@ public class MoveBox {
 
 	@Before
 	public void setup() {
-		_gameModel = new Logic();
-		_gameModel.getState().createRectangleField(10, 10);
+		_logic = new Logic();
+		_logic.getState().createRectangleField(10, 10);
 	}
 
 	@Test
 	public void moveBox() {
-		_gameModel.setMan(_manPos._row, _manPos._col);
+		_logic.setMan(_manPos._row, _manPos._col);
 		try {
-			_gameModel.setUnit(_boxPos._row, _boxPos._col, _box);
-			_gameModel.setUnit(_unitPos._row, _unitPos._col, _unit);
+			_logic.setUnit(_boxPos._row, _boxPos._col, _box);
+			_logic.setUnit(_unitPos._row, _unitPos._col, _unit);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}
 
-		_gameModel.moveMan(_dir);
+		_logic.moveMan(_dir);
 
 		Unit unit = null;
 		try {
-			unit = _gameModel.getState().getUnit(_expectedPos._row, _expectedPos._col);
+			unit = _logic.getState().getUnit(_expectedPos._row, _expectedPos._col);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}

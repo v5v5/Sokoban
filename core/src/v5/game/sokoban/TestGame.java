@@ -27,7 +27,7 @@ public class TestGame {
 				controller.repaintView();
 			}
 		};
-		frame.setSize(450, 300);
+		frame.setSize(600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 
@@ -92,7 +92,8 @@ public class TestGame {
 		});
 
 		// init controller
-		controller.setFieldDefault();
+//		controller.setFieldDefault();
+		controller.loadField();
 	}
 
 }

@@ -12,7 +12,7 @@ import v5.game.sokoban.model.T.Unit;
 
 public class MoveTest {
 
-	Logic _gameModel;
+	Logic _logic;
 	static int manRow = 5;
 	static int manCol = 5;
 
@@ -147,8 +147,8 @@ public class MoveTest {
 
 	@Before
 	public void setup() {
-		_gameModel = new Logic();
-		_gameModel.getState().createRectangleField(10, 10);
+		_logic = new Logic();
+		_logic.getState().createRectangleField(10, 10);
 	}
 
 }

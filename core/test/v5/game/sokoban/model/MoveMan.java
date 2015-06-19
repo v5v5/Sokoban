@@ -25,17 +25,17 @@ public class MoveMan extends MoveTest {
 
 	@Test
 	public void moveMan() {
-		_gameModel.setMan(_manPos._row, _manPos._col);
+		_logic.setMan(_manPos._row, _manPos._col);
 		try {
-			_gameModel.setUnit(_nearPos._row, _nearPos._col, _nearUnit);
-			_gameModel.setUnit(_farPos._row, _farPos._col, _farUnit);
+			_logic.setUnit(_nearPos._row, _nearPos._col, _nearUnit);
+			_logic.setUnit(_farPos._row, _farPos._col, _farUnit);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}
 
-		_gameModel.moveMan(_dir);
+		_logic.moveMan(_dir);
 
-		Point p = _gameModel._state.getMan();
+		Point p = _logic._state.getMan();
 
 		assertEquals(_expectedPos._row, p._row);
 		assertEquals(_expectedPos._col, p._col);
@@ -43,34 +43,34 @@ public class MoveMan extends MoveTest {
 
 	@Test
 	public void canMove() {
-		_gameModel.setMan(_manPos._row, _manPos._col);
+		_logic.setMan(_manPos._row, _manPos._col);
 
 		Unit unit = null;
 		try {
-			_gameModel.setUnit(_nearPos._row, _nearPos._col, _nearUnit);
-			unit = _gameModel._state.getUnit(_nearPos._row, _nearPos._col);
+			_logic.setUnit(_nearPos._row, _nearPos._col, _nearUnit);
+			unit = _logic._state.getUnit(_nearPos._row, _nearPos._col);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}
 		assertEquals(_nearUnit, unit);
 
 		try {
-			_gameModel.setUnit(_farPos._row, _farPos._col, _farUnit);
-			unit = _gameModel._state.getUnit(_farPos._row, _farPos._col);
+			_logic.setUnit(_farPos._row, _farPos._col, _farUnit);
+			unit = _logic._state.getUnit(_farPos._row, _farPos._col);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		assertEquals(_farUnit, unit);
 
-		boolean can = _gameModel.canManMove(_dir);
+		boolean can = _logic.canManMove(_dir);
 		assertEquals(_expectedCan, can);
 
 		try {
-			_gameModel.setUnit(_nearPos._row, _nearPos._col, null);
+			_logic.setUnit(_nearPos._row, _nearPos._col, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		can = _gameModel.canManMove(_dir);
+		can = _logic.canManMove(_dir);
 		assertTrue(can);
 	}
 

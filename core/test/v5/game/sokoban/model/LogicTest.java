@@ -9,19 +9,19 @@ import org.junit.Test;
 import v5.game.sokoban.model.E.OutInField;
 import v5.game.sokoban.model.T.Unit;
 
-public class SokobanGameTest {
+public class LogicTest {
 
-	Logic _gameModel;
+	Logic _logic;
 
 	@Before
 	public void setup() {
-		_gameModel = new Logic();
+		_logic = new Logic();
 	}
 
 	@Test
 	public void createEmptyField() {
-		_gameModel.getState().createEmptyField();
-		Unit[][] gameField = _gameModel.getState().getField();
+		_logic.getState().createEmptyField();
+		Unit[][] gameField = _logic.getState().getField();
 
 		for (int row = 0; row < gameField.length; row++) {
 			for (int col = 0; col < gameField[row].length; col++) {
@@ -33,8 +33,8 @@ public class SokobanGameTest {
 	@Test
 	public void createRectangleField() {
 
-		_gameModel.getState().createRectangleField(8, 6);
-		Unit[][] gameField = _gameModel.getState().getField();
+		_logic.getState().createRectangleField(8, 6);
+		Unit[][] gameField = _logic.getState().getField();
 
 		int countRows = gameField.length;
 		assertEquals(8, countRows);
@@ -49,12 +49,12 @@ public class SokobanGameTest {
 
 	@Test
 	public void setUnit() {
-		_gameModel.getState().createRectangleField(11, 11);
+		_logic.getState().createRectangleField(11, 11);
 
 		Unit unit = null;
 		try {
-			_gameModel.setUnit(0, 0, Unit.BOX);
-			unit = _gameModel._state.getUnit(0, 0);
+			_logic.setUnit(0, 0, Unit.BOX);
+			unit = _logic._state.getUnit(0, 0);
 		} catch (OutInField e) {
 			e.printStackTrace();
 		}

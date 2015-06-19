@@ -36,5 +36,9 @@ public class Controller implements LogicInterface, ControllerInterface {
 		State state = _model.getLogic().getState();
 		_view.onChange(state);
 	}
+	
+	public void loadField() {
+		_model.loadField();
+	}
 
 }
