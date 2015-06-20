@@ -47,6 +47,7 @@ public class Model implements ModelInterface, LogicInterface {
 	}
 
 	public void loadField() {
+		_logic._state.clear();
 		FieldLoader.load(_logic.getState());
 		fireChangedEvent();
 	}

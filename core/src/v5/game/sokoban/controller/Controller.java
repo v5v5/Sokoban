@@ -6,15 +6,13 @@ import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Direction;
 import v5.game.sokoban.view.View;
 
-public class Controller implements LogicInterface, ControllerInterface {
+public class Controller implements LogicInterface {
 
 	private Model _model;
 	private View _view;
 
 	public Controller() {
 		_model = new Model();
-		_view = new View();
-		_model.addListener(_view);
 	}
 
 	@Override
@@ -22,16 +20,15 @@ public class Controller implements LogicInterface, ControllerInterface {
 		return _model.moveMan(direction);
 	}
 
-	@Override
-	public View getView() {
-		return _view;
+	public void setView(View view) {
+		_view = view;
+		_model.addListener(_view);
 	}
 
 	public void setFieldDefault() {
 		_model.setFieldDefault();
 	}
 
-	@Override
 	public void repaintView() {
 		try {
 			State state = _model.getLogic().getState();
