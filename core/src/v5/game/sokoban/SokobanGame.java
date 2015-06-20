@@ -1,6 +1,5 @@
 package v5.game.sokoban;
 
-
 //import com.badlogic.gdx.ApplicationAdapter;
 //import com.badlogic.gdx.Gdx;
 //import com.badlogic.gdx.graphics.GL20;
@@ -30,12 +29,10 @@ package v5.game.sokoban;
 import com.badlogic.gdx.Game;
 
 public class SokobanGame extends Game {
-	
+
 	@Override
 	public void create() {
 		setScreen(new SokobanScreen());
 	}
 
 }
-
-

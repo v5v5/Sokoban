@@ -1,6 +1,7 @@
 package v5.game.sokoban;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -8,10 +9,13 @@ import javax.swing.JFrame;
 
 import v5.game.sokoban.controller.Controller;
 import v5.game.sokoban.model.T.Direction;
-import v5.game.sokoban.model.T.Unit;
+import v5.game.sokoban.view.Graphics;
 import v5.game.sokoban.view.View;
 
 public class TestGame {
+
+	protected static final Color[] COLORS = { Color.black, Color.yellow,
+			Color.blue, Color.green, Color.magenta, Color.cyan };
 
 	public static void main(String[] args) {
 
@@ -60,17 +64,23 @@ public class TestGame {
 		});
 
 		// create output data stream
-		final java.awt.Graphics graphics = frame.getGraphics();
+		final Graphics2D graphics = (Graphics2D) frame.getGraphics();
 
-		controller.setView(new View() {
-			public void drawUnit(Unit unit, int row, int col) {				
-				drawUnitExample(unit, row, col, graphics);
+		View view = new View();
+		view.setGraphics(new Graphics() {
+
+			@Override
+			public void fillRect(int x, int y, int width, int height,
+					int colorIndex) {
+				graphics.setColor(COLORS[colorIndex]);
+				graphics.fillRect(x, y, width, height);
 			}
 		});
+		controller.setView(view);
 
 		// init controller
-		 controller.setFieldDefault();
-//		controller.loadField();
+		controller.setFieldDefault();
+		// controller.loadField();
 	}
 
 }

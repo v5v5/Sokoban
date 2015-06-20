@@ -16,40 +16,40 @@ public class SokobanScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-	       Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
-	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	        
-	        _stage.act(delta);
-	        _stage.draw();
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		_stage.act(delta);
+		_stage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-        _stage.getViewport().update(width, height, true);		
+		_stage.getViewport().update(width, height, true);
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
