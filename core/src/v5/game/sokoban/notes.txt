@@ -19,13 +19,14 @@ controller
 view
 --draw units
 
+
 DONE
 
 create mvc & tests
-create controller & view
+create controller & view-default
 create TestGame
 create FieldLoader
-
+add libgdx game, state, stage, view
 
 
 
