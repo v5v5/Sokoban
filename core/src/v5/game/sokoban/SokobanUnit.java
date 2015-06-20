@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class SokobanUnit extends Actor  {
+public class SokobanUnit extends Actor {
 
 	protected static final int SIZE = 30;
 
 	private Texture _texture = createTexture(Color.RED);
-		
+
 	private static Texture createTexture(Color color) {
 		Texture texture = null;
 
@@ -24,7 +24,6 @@ public class SokobanUnit extends Actor  {
 
 		return texture;
 	}
-
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

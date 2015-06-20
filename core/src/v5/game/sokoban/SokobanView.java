@@ -1,21 +1,27 @@
 package v5.game.sokoban;
 
+import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Unit;
 import v5.game.sokoban.view.View;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class SokobanView extends View {
-	
+
 	SokobanUnit _man = new SokobanUnit();
-	
+
 	Stage _stage;
 
 	public SokobanView(Stage stage) {
 		_stage = stage;
-		
+
 		_man.setBounds(-30, -30, 30, 30);
 		_stage.addActor(_man);
+	}
+
+	@Override
+	protected void draw(State state) {
+		super.draw(state);
 	}
 
 	@Override
@@ -26,7 +32,7 @@ public class SokobanView extends View {
 		} else {
 			switch (unit) {
 			case MAN:
-				
+
 				_man.setBounds(col * 30, row * 30, 30, 30);
 
 				break;
