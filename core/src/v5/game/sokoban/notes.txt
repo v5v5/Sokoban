@@ -12,7 +12,8 @@ model
 	men	
 --move men
 --move box
---target reached (TODO)
+--load field from file-resource
+--target reached (game over)
 
 controller
 
