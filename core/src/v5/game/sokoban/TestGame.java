@@ -54,7 +54,7 @@ public class TestGame {
 					controller.moveMan(Direction.UP);
 					break;
 				case KeyEvent.VK_SPACE:
-					controller.loadField();
+					controller.loadField(0);
 					break;
 				default:
 					break;

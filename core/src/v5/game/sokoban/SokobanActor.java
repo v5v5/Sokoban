@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class SokobanUnit extends Actor {
+public class SokobanActor extends Actor {
 
 	protected static final int SIZE = 30;
 
@@ -33,4 +33,33 @@ public class SokobanUnit extends Actor {
 				_texture.getWidth(), _texture.getHeight(), false, false);
 	}
 
+	public static SokobanActor createFieldFloor() {
+		SokobanActor a = new SokobanActor();
+		a._texture = createTexture(Color.GRAY);
+		return a;
+	}
+
+	public static SokobanActor createFieldWall() {
+		SokobanActor a = new SokobanActor();
+		a._texture = createTexture(Color.BLACK);
+		return a;
+	}
+
+	public static SokobanActor createFieldTarget() {
+		SokobanActor a = new SokobanActor();
+		a._texture = createTexture(Color.RED);
+		return a;
+	}
+
+	public static SokobanActor createMan() {
+		SokobanActor a = new SokobanActor();
+		a._texture = createTexture(Color.GREEN);
+		return a;
+	}
+
+	public static SokobanActor createBox() {
+		SokobanActor a = new SokobanActor();
+		a._texture = createTexture(Color.BLUE);
+		return a;
+	}
 }

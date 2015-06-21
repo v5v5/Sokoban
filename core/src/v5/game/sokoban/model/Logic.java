@@ -1,5 +1,6 @@
 package v5.game.sokoban.model;
 
+import v5.game.sokoban.model.E.CantLoadField;
 import v5.game.sokoban.model.E.OutInField;
 import v5.game.sokoban.model.T.Direction;
 import v5.game.sokoban.model.T.Unit;
@@ -19,11 +20,14 @@ public class Logic implements LogicInterface {
 		if (!_state._man.canMove(dir)) {
 			return false;
 		}
-
-		return _state._man.move(dir);
+		
+		_state._man.move(dir);
+		_state._gameOver = isGameOver();
+		return true;
 	}
 
 	public void createDefaultField() {
+		_state.clear();
 		_state._field = new Unit[7][11];
 
 		// create walls
@@ -53,6 +57,7 @@ public class Logic implements LogicInterface {
 	}
 
 	public void createComplexField() {
+		_state.clear();
 		_state._field = new Unit[7][11];
 
 		// create walls
@@ -118,6 +123,33 @@ public class Logic implements LogicInterface {
 			return;
 		}
 		m.setPos(row, col);
+
+		_state._gameOver = isGameOver();
+	}
+
+	boolean isGameOver() {
+		int countBoxes = _state._boxes.size();
+		int countMatch = 0;
+
+		for (int row = 0; row < _state._field.length; row++) {
+			for (int col = 0; col < _state._field[row].length; col++) {
+				
+				if (Unit.TARGET != _state._field[row][col]) {					
+					continue;
+				}
+
+				for (BoxObject box : _state._boxes) {
+					if ((box.getRow() == row) && (box.getCol() == col)) {
+						countMatch++;
+						if (countMatch == countBoxes) {
+							return true;
+						}
+					}
+				}
+
+			}
+		}
+		return false;
 	}
 
 	protected void setUnit(int row, int col, Unit unit) throws OutInField {
@@ -161,6 +193,17 @@ public class Logic implements LogicInterface {
 	public boolean checkFieldBounds(int row, int col) {
 		if ((row < 0) || (row >= _state._field.length) || (col < 0)
 				|| (col >= _state._field[0].length)) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean loadField(int index) {
+		_state.clear();
+		try {
+			FieldLoader.load(getState(), index);
+		} catch (CantLoadField e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;

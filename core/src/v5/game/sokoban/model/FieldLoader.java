@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+import v5.game.sokoban.model.E.CantLoadField;
 import v5.game.sokoban.model.T.Point;
 import v5.game.sokoban.model.T.Unit;
 import v5.game.sokoban.model.dynamicObjects.BoxObject;
@@ -14,11 +15,16 @@ import v5.game.sokoban.model.dynamicObjects.ManObject;
 
 public class FieldLoader {
 
-	static public void load(State state) {
+	static public void load(State state, int index) throws CantLoadField {
 
-		String file = "/v5/game/sokoban/resources/field0.txt";
+		String file = "/v5/game/sokoban/resources/field" + index + ".txt";
+		
+		URL url = state.getClass().getResource(file);
+		if (url == null) {
+			throw new CantLoadField();
+		}
 
-		ArrayList<String> field = copyToArray(file);
+		ArrayList<String> field = copyToArray(url);
 
 		Point fieldSize = getFieldSize(field);
 
@@ -27,10 +33,10 @@ public class FieldLoader {
 		fillField(field, state);
 	}
 
-	private static ArrayList<String> copyToArray(String file) {
+	private static ArrayList<String> copyToArray(URL url) {
 		ArrayList<String> al = new ArrayList<String>();
 
-		URL url = al.getClass().getResource(file);
+//		URL url = al.getClass().getResource(file);
 
 		BufferedReader reader = null;
 		String line;

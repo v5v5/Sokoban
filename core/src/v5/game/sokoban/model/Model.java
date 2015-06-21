@@ -3,6 +3,7 @@ package v5.game.sokoban.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import v5.game.sokoban.model.ModelListener.Event;
 import v5.game.sokoban.model.T.Direction;
 
 public class Model implements ModelInterface, LogicInterface {
@@ -25,31 +26,37 @@ public class Model implements ModelInterface, LogicInterface {
 	}
 
 	@Override
-	public void fireChangedEvent() {
+	public void fireChangedEvent(Event event) {
 		for (ModelListener modelListener : _listeners) {
-			modelListener.onChange(_logic.getState());
+			modelListener.onChange(event, _logic.getState());
 		}
 	}
 
 	@Override
 	public boolean moveMan(Direction direction) {
-		if (_logic.moveMan(direction)) {
-			fireChangedEvent();
-			return true;
+		boolean b = _logic.moveMan(direction);
+		if (b) {
+			if (_logic._state._gameOver) {
+				fireChangedEvent(Event.GAME_OVER);
+			} else {
+				fireChangedEvent(Event.UPDATE);
+			}
 		}
-		return false;
+		return b;
 	}
 
 	public void setFieldDefault() {
 		// _logic.getState().createDefaultField();
 		_logic.createComplexField();
-		fireChangedEvent();
+		fireChangedEvent(Event.NEW_GAME);
 	}
 
-	public void loadField() {
-		_logic._state.clear();
-		FieldLoader.load(_logic.getState());
-		fireChangedEvent();
+	public boolean loadField(int index) {
+		boolean b = _logic.loadField(index);
+		if (b) {
+			fireChangedEvent(Event.NEW_GAME);
+		}
+		return b;
 	}
 
 }

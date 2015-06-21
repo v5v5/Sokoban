@@ -4,7 +4,7 @@ public class E {
 
 	static class OutInField extends Exception {
 
-		private static final long serialVersionUID = 7270080860214950670L;
+		private static final long serialVersionUID = 1L;
 
 		public OutInField() {
 			super();
@@ -16,4 +16,10 @@ public class E {
 
 	}
 
+	
+	static class CantLoadField extends Exception {
+
+		private static final long serialVersionUID = 1L;
+		
+	}
 }

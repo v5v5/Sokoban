@@ -14,7 +14,12 @@ public class GameTests {
 
 	@Test
 	public void loadField() {
-		_model.loadField();
+		_model.loadField(0);
+	}
+	
+	@Test
+	public void gameOver() {
+//		_model.
 	}
 
 }

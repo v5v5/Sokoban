@@ -17,12 +17,15 @@ public class State {
 	// dynamic objects (Unit.MAN, Unit.BOX)
 	ManObject _man;
 	ArrayList<BoxObject> _boxes = new ArrayList<BoxObject>();
+	
+	boolean _gameOver = false;
 
 	public State(Logic logic) {
 		_logic = logic;
 	}
 
 	public void clear() {
+		_gameOver = false;
 		_field = new Unit[0][0];
 		_man = null;
 		_boxes.clear();

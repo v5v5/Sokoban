@@ -11,8 +11,21 @@ import v5.game.sokoban.model.dynamicObjects.ManObject;
 public class View implements ModelListener {
 
 	@Override
-	public void onChange(State state) {
-		draw(state);
+	public void onChange(Event event, State state) {
+		switch (event) {
+		case NEW_GAME:
+			
+			break;
+		case UPDATE:
+			draw(state);
+			break;
+		case GAME_OVER:
+			
+			break;
+		default:
+			break;
+		}
+		
 	}
 
 	protected void draw(State state) {

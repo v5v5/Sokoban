@@ -30,7 +30,7 @@ public abstract class DynamicObject {
 		_col = col;
 	}
 
-	public boolean move(Direction dir) {
+	public void move(Direction dir) {
 
 		Point newPos = getNewPos(dir);
 
@@ -41,8 +41,6 @@ public abstract class DynamicObject {
 
 		_row = newPos._row;
 		_col = newPos._col;
-
-		return true;
 	}
 
 	public boolean canMove(Direction dir) {

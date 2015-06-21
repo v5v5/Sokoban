@@ -46,6 +46,9 @@ public class SokobanStage extends Stage {
 				case Input.Keys.UP:
 					controller.moveMan(v5.game.sokoban.model.T.Direction.UP);
 					break;
+				case Input.Keys.SPACE:
+					controller.loadField(0);
+					break;
 				}
 				return true;
 			}

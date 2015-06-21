@@ -2,6 +2,7 @@ package v5.game.sokoban.controller;
 
 import v5.game.sokoban.model.LogicInterface;
 import v5.game.sokoban.model.Model;
+import v5.game.sokoban.model.ModelListener.Event;
 import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Direction;
 import v5.game.sokoban.view.View;
@@ -32,14 +33,14 @@ public class Controller implements LogicInterface {
 	public void repaintView() {
 		try {
 			State state = _model.getLogic().getState();
-			_view.onChange(state);
+			_view.onChange(Event.UPDATE, state);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void loadField() {
-		_model.loadField();
+	public boolean loadField(int index) {
+		return _model.loadField(index);
 	}
 
 }

@@ -2,6 +2,7 @@ package v5.game.sokoban.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,6 +60,19 @@ public class LogicTest {
 			e.printStackTrace();
 		}
 		assertEquals(Unit.BOX, unit);
+	}
+
+	@Test
+	public void gameOver() {
+		_logic._state.setField(2, 2);
+		_logic.addBox(0, 0);
+		assertFalse(_logic.isGameOver());
+		_logic.setTarget(0, 0);
+		assertTrue(_logic.isGameOver());
+		_logic.addBox(0, 1);
+		assertFalse(_logic.isGameOver());
+		_logic.setTarget(0, 1);
+		assertTrue(_logic.isGameOver());
 	}
 
 	// @Test
