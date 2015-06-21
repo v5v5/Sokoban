@@ -5,7 +5,9 @@ import v5.game.sokoban.view.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,10 +15,16 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class SokobanStage extends Stage {
 
+	private OrthographicCamera _cam;
+	private SpriteBatch batcher;
+
 	public SokobanStage() {
-		OrthographicCamera camera = new OrthographicCamera();
-		camera.setToOrtho(true);
-		setViewport(new ScreenViewport(camera));
+		_cam = new OrthographicCamera();
+		_cam.setToOrtho(true);
+		setViewport(new ScreenViewport(_cam));
+		
+		batcher = new SpriteBatch();
+		batcher.setProjectionMatrix(_cam.combined);
 	}
 
 	public void init() {
@@ -56,6 +64,27 @@ public class SokobanStage extends Stage {
 		});
 
 		controller.setFieldDefault();
+	}
+	
+	
+	private float runTime;
+
+	public void draw(float delta) {
+//		System.out.println("stage draw");
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		super.draw();
+		
+		batcher.begin();
+		batcher.enableBlending();
+		
+		runTime += delta;
+		// Pass in the runTime variable to get the current frame.
+		batcher.draw(AssetLoader.manAnimation.getKeyFrame(runTime),
+				50, 50, 30, 30); 
+		batcher.end();
+
 	}
 
 }

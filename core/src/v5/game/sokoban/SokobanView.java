@@ -17,7 +17,7 @@ public class SokobanView extends View {
 	SokobanActor[] _boxes;
 
 	Stage _stage;
-	
+
 	final int SIZE = SokobanActor.SIZE;
 
 	public SokobanView(Stage stage) {
@@ -43,7 +43,7 @@ public class SokobanView extends View {
 			break;
 		}
 	}
-	
+
 	private void createBoxes(State state) {
 		ArrayList<BoxObject> boxes = state.getBoxes();
 		_boxes = new SokobanActor[boxes.size()];
@@ -63,18 +63,18 @@ public class SokobanView extends View {
 	}
 
 	private void createMan(State state) {
-		_man =  SokobanActor.createMan();
+		_man = SokobanActor.createMan();
 
-		ManObject m = state.getMan();		
-		_man.setBounds(m.getCol() * SIZE , m.getRow() * SIZE, SIZE, SIZE);
+		ManObject m = state.getMan();
+		_man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
 		_stage.addActor(_man);
 	}
 
 	private void createField(State state) {
 		Unit[][] fieldModel = state.getField();
-		
+
 		_field = new SokobanActor[fieldModel.length][fieldModel[0].length];
-		
+
 		for (int row = 0; row < fieldModel.length; row++) {
 			for (int col = 0; col < fieldModel[row].length; col++) {
 				if (null == fieldModel[row][col]) {
@@ -121,16 +121,15 @@ public class SokobanView extends View {
 
 	private void drawMan(State state) {
 		ManObject m = state.getMan();
-		_man.setBounds(m.getCol() * SIZE , m.getRow() * SIZE, SIZE, SIZE);		
+		_man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
 	}
 
 	private void drawField(State state) {
 		for (int row = 0; row < _field.length; row++) {
 			for (int col = 0; col < _field[row].length; col++) {
-				_field[row][col] .setBounds(col * SIZE, row * SIZE, SIZE, SIZE);										
+				_field[row][col].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
 			}
-		}		
+		}
 	}
-
 
 }

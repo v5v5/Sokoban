@@ -13,7 +13,8 @@ package v5.game.sokoban;
 //	@Override
 //	public void create() {
 //		batch = new SpriteBatch();
-//		img = new Texture("badlogic.jpg");
+////		img = new Texture("badlogic.jpg");
+//		img = new Texture("man.png");
 //	}
 //
 //	@Override
@@ -32,6 +33,7 @@ public class SokobanGame extends Game {
 
 	@Override
 	public void create() {
+		AssetLoader.load();
 		setScreen(new SokobanScreen());
 	}
 

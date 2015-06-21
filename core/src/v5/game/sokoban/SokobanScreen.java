@@ -1,8 +1,6 @@
 package v5.game.sokoban;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 
 public class SokobanScreen implements Screen {
 
@@ -16,11 +14,8 @@ public class SokobanScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		_stage.act(delta);
-		_stage.draw();
+		_stage.draw(delta);
 	}
 
 	@Override

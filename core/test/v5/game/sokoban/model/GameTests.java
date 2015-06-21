@@ -1,7 +1,11 @@
 package v5.game.sokoban.model;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import v5.game.sokoban.AssetLoader;
 
 public class GameTests {
 
@@ -22,4 +26,9 @@ public class GameTests {
 //		_model.
 	}
 
+	@Test
+	public void assertLoader() {
+		AssetLoader.load();
+//		assertEquals(null, AssetLoader.texture);
+	}
 }
