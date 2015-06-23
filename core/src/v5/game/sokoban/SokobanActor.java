@@ -1,5 +1,6 @@
 package v5.game.sokoban;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class SokobanActor extends Actor {
 
-	protected static final int SIZE = 30;
+	protected static final int SIZE = 32;
 
 	private Texture _texture = createTexture(Color.RED);
 
@@ -35,31 +36,38 @@ public class SokobanActor extends Actor {
 
 	public static SokobanActor createFieldFloor() {
 		SokobanActor a = new SokobanActor();
-		a._texture = createTexture(Color.GRAY);
+//		a._texture = createTexture(Color.GRAY);
+		a._texture = new Texture(Gdx.files.internal("space.png"));
 		return a;
 	}
 
 	public static SokobanActor createFieldWall() {
 		SokobanActor a = new SokobanActor();
-		a._texture = createTexture(Color.BLACK);
+//		a._texture = createTexture(Color.BLACK);
+		a._texture = new Texture(Gdx.files.internal("wall.png"));
 		return a;
 	}
 
 	public static SokobanActor createFieldTarget() {
 		SokobanActor a = new SokobanActor();
-		a._texture = createTexture(Color.RED);
+//		a._texture = createTexture(Color.RED);
+		a._texture = new Texture(Gdx.files.internal("site.png"));
 		return a;
 	}
 
 	public static SokobanActor createMan() {
 		SokobanActor a = new SokobanActor();
-		a._texture = createTexture(Color.GREEN);
+//		a._texture = createTexture(Color.GREEN);
+		a._texture = new Texture(Gdx.files.internal("player.png"));
+		a.setOrigin(SIZE / 2, SIZE / 2);		
+		a.rotateBy(180);
 		return a;
 	}
 
 	public static SokobanActor createBox() {
 		SokobanActor a = new SokobanActor();
-		a._texture = createTexture(Color.BLUE);
+//		a._texture = createTexture(Color.BLUE);
+		a._texture = new Texture(Gdx.files.internal("box.png"));
 		return a;
 	}
 }

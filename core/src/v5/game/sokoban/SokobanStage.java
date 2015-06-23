@@ -67,7 +67,7 @@ public class SokobanStage extends Stage {
 	}
 	
 	
-	private float runTime;
+//	private float runTime;
 
 	public void draw(float delta) {
 //		System.out.println("stage draw");
@@ -76,14 +76,14 @@ public class SokobanStage extends Stage {
 
 		super.draw();
 		
-		batcher.begin();
-		batcher.enableBlending();
-		
-		runTime += delta;
-		// Pass in the runTime variable to get the current frame.
-		batcher.draw(AssetLoader.manAnimation.getKeyFrame(runTime),
-				50, 50, 30, 30); 
-		batcher.end();
+//		batcher.begin();
+//		batcher.enableBlending();
+//		
+//		runTime += delta;
+//		// Pass in the runTime variable to get the current frame.
+//		batcher.draw(AssetLoader.manAnimation.getKeyFrame(runTime),
+//				50, 50, 30, 30); 
+//		batcher.end();
 
 	}
 
