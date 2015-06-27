@@ -7,7 +7,7 @@ import v5.game.sokoban.model.T.Unit;
 import v5.game.sokoban.model.dynamicObjects.BoxObject;
 import v5.game.sokoban.model.dynamicObjects.ManObject;
 
-public class Logic implements LogicInterface {
+public class Logic {
 
 	State _state = new State(this);
 
@@ -15,7 +15,6 @@ public class Logic implements LogicInterface {
 		return _state;
 	}
 
-	@Override
 	public boolean moveMan(Direction dir) {
 		if (!_state._man.canMove(dir)) {
 			return false;

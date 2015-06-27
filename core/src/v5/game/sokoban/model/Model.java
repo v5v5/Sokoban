@@ -6,7 +6,7 @@ import java.util.List;
 import v5.game.sokoban.model.ModelListener.Event;
 import v5.game.sokoban.model.T.Direction;
 
-public class Model implements ModelInterface, LogicInterface {
+public class Model implements ModelInterface {
 
 	List<ModelListener> _listeners = new ArrayList<ModelListener>();
 	private Logic _logic = new Logic();
@@ -32,7 +32,6 @@ public class Model implements ModelInterface, LogicInterface {
 		}
 	}
 
-	@Override
 	public boolean moveMan(Direction direction) {
 		boolean b = _logic.moveMan(direction);
 		if (b) {

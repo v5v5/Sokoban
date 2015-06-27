@@ -1,13 +1,12 @@
 package v5.game.sokoban.controller;
 
-import v5.game.sokoban.model.LogicInterface;
 import v5.game.sokoban.model.Model;
 import v5.game.sokoban.model.ModelListener;
 import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Direction;
 import v5.game.sokoban.view.View;
 
-public class Controller implements LogicInterface, ModelListener {
+public class Controller implements ModelListener {
 
 	private Model _model;
 	private View _view;
@@ -17,7 +16,6 @@ public class Controller implements LogicInterface, ModelListener {
 		_model.addListener(this);
 	}
 
-	@Override
 	public boolean moveMan(Direction direction) {
 		return _model.moveMan(direction);
 	}
