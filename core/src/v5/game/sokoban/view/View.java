@@ -2,33 +2,14 @@ package v5.game.sokoban.view;
 
 import java.util.ArrayList;
 
-import v5.game.sokoban.model.ModelListener;
 import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Unit;
 import v5.game.sokoban.model.dynamicObjects.BoxObject;
 import v5.game.sokoban.model.dynamicObjects.ManObject;
 
-public class View implements ModelListener {
+public class View {
 
-	@Override
-	public void onChange(Event event, State state) {
-		switch (event) {
-		case NEW_GAME:
-			
-			break;
-		case UPDATE:
-			draw(state);
-			break;
-		case GAME_OVER:
-			
-			break;
-		default:
-			break;
-		}
-		
-	}
-
-	protected void draw(State state) {
+	public void draw(State state) {
 		drawField(state.getField());
 		drawBoxes(state.getBoxes());
 		drawMan(state.getMan());
@@ -96,6 +77,11 @@ public class View implements ModelListener {
 
 	public void setGraphics(Graphics graphics) {
 		g = graphics;
+	}
+
+	public void createActors(State state) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -24,24 +24,10 @@ public class SokobanView extends View {
 		_stage = stage;
 	}
 
-	@Override
-	public void onChange(Event event, State state) {
-		switch (event) {
-		case NEW_GAME:
-			createField(state);
-			createMan(state);
-			createBoxes(state);
-			break;
-		case UPDATE:
-			draw(state);
-			break;
-		case GAME_OVER:
-			draw(state);
-			System.err.println("Game Over!");
-			break;
-		default:
-			break;
-		}
+	public void createActors(State state) {
+		this.createField(state);
+		this.createMan(state);
+		this.createBoxes(state);		
 	}
 
 	private void createBoxes(State state) {
@@ -97,8 +83,7 @@ public class SokobanView extends View {
 		}
 	}
 
-	@Override
-	protected void draw(State state) {
+	public void draw(State state) {
 		drawField(state);
 		drawMan(state);
 		drawBoxes(state);

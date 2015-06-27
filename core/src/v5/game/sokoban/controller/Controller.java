@@ -2,18 +2,19 @@ package v5.game.sokoban.controller;
 
 import v5.game.sokoban.model.LogicInterface;
 import v5.game.sokoban.model.Model;
-import v5.game.sokoban.model.ModelListener.Event;
+import v5.game.sokoban.model.ModelListener;
 import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Direction;
 import v5.game.sokoban.view.View;
 
-public class Controller implements LogicInterface {
+public class Controller implements LogicInterface, ModelListener {
 
 	private Model _model;
 	private View _view;
 
 	public Controller() {
 		_model = new Model();
+		_model.addListener(this);
 	}
 
 	@Override
@@ -23,7 +24,6 @@ public class Controller implements LogicInterface {
 
 	public void setView(View view) {
 		_view = view;
-		_model.addListener(_view);
 	}
 
 	public void setFieldDefault() {
@@ -33,7 +33,7 @@ public class Controller implements LogicInterface {
 	public void repaintView() {
 		try {
 			State state = _model.getLogic().getState();
-			_view.onChange(Event.UPDATE, state);
+			this.onChange(Event.UPDATE, state);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,6 +41,32 @@ public class Controller implements LogicInterface {
 
 	public boolean loadField(int index) {
 		return _model.loadField(index);
+	}
+
+	@Override
+	public void onChange(Event event, State state) {
+		switch (event) {
+		case NEW_GAME:
+			if (_view == null)
+				return;
+			_view.createActors(state);
+			break;
+		case UPDATE:
+			if (_view == null)
+				return;
+			_view.draw(state);
+			break;
+		case GAME_OVER:
+			System.err.println("Game Over!");
+			if (_view == null)
+				return;
+			_view.draw(state);
+
+			break;
+		default:
+			break;
+		}
+
 	}
 
 }
