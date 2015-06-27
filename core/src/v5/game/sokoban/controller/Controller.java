@@ -46,6 +46,8 @@ public class Controller implements ModelListener {
 
 	@Override
 	public void onChange(Event event, State state) {
+		// TODO create queue of events and add event to queue
+		// and view run on process queue
 		switch (event) {
 		case NEW_GAME:
 			if (_view == null)

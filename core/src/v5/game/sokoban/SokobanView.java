@@ -49,7 +49,8 @@ public class SokobanView extends View {
 		for (BoxObject box : boxes) {
 			row = box.getRow();
 			col = box.getCol();
-			_boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+//			_boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+			_boxes[i].addAction(Actions.moveTo(col * SIZE, row * SIZE, 0.5f));
 			i++;
 		}
 	}
