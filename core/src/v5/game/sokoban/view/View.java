@@ -80,8 +80,7 @@ public class View {
 	}
 
 	public void createActors(State state) {
-		// TODO Auto-generated method stub
-		
+		g.fillRect(0, 0, 20 * BOX_SIZE, 20 * BOX_SIZE, 0);
 	}
 
 }

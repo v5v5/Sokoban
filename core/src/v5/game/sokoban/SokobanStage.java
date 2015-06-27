@@ -54,8 +54,14 @@ public class SokobanStage extends Stage {
 				case Input.Keys.UP:
 					controller.moveMan(v5.game.sokoban.model.T.Direction.UP);
 					break;
-				case Input.Keys.SPACE:
+				case Input.Keys.NUM_1:
 					controller.loadField(0);
+					break;
+				case Input.Keys.NUM_2:
+					controller.loadField(1);
+					break;
+				case Input.Keys.NUM_3:
+					controller.loadField(2);
 					break;
 				}
 				return true;
@@ -67,24 +73,24 @@ public class SokobanStage extends Stage {
 	}
 	
 	
-//	private float runTime;
-
-	public void draw(float delta) {
-//		System.out.println("stage draw");
+////	private float runTime;
+//
+	public void draw() {
+////		System.out.println("stage draw");
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+//
 		super.draw();
-		
-//		batcher.begin();
-//		batcher.enableBlending();
 //		
-//		runTime += delta;
-//		// Pass in the runTime variable to get the current frame.
-//		batcher.draw(AssetLoader.manAnimation.getKeyFrame(runTime),
-//				50, 50, 30, 30); 
-//		batcher.end();
-
+////		batcher.begin();
+////		batcher.enableBlending();
+////		
+////		runTime += delta;
+////		// Pass in the runTime variable to get the current frame.
+////		batcher.draw(AssetLoader.manAnimation.getKeyFrame(runTime),
+////				50, 50, 30, 30); 
+////		batcher.end();
+//
 	}
 
 }

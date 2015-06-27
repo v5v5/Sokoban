@@ -15,7 +15,7 @@ public class SokobanScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		_stage.act(delta);
-		_stage.draw(delta);
+		_stage.draw();
 	}
 
 	@Override

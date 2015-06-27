@@ -14,8 +14,8 @@ import v5.game.sokoban.view.View;
 
 public class TestGame {
 
-	protected static final Color[] COLORS = { Color.black, Color.yellow,
-			Color.blue, Color.green, Color.magenta, Color.cyan };
+	protected static final Color[] COLORS = { Color.gray, Color.black,
+			Color.magenta, Color.green, Color.blue, Color.cyan };
 
 	public static void main(String[] args) {
 
@@ -53,8 +53,14 @@ public class TestGame {
 				case KeyEvent.VK_UP:
 					controller.moveMan(Direction.UP);
 					break;
-				case KeyEvent.VK_SPACE:
+				case KeyEvent.VK_1:
 					controller.loadField(0);
+					break;
+				case KeyEvent.VK_2:
+					controller.loadField(1);
+					break;
+				case KeyEvent.VK_3:
+					controller.loadField(2);
 					break;
 				default:
 					break;

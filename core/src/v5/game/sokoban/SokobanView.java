@@ -27,6 +27,7 @@ public class SokobanView extends View {
 	}
 
 	public void createActors(State state) {
+		_stage.getRoot().clearChildren();
 		this.createField(state);
 		this.createMan(state);
 		this.createBoxes(state);		
@@ -118,10 +119,6 @@ public class SokobanView extends View {
 				_stage.addActor(_field[row][col]);
 			}
 		}
-	}
-
-	public SokobanActor get_man() {
-		return _man;
 	}
 
 }

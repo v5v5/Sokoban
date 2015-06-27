@@ -51,6 +51,7 @@ public class Controller implements ModelListener {
 			if (_view == null)
 				return;
 			_view.createActors(state);
+			_view.draw(state);
 			break;
 		case MOVE_MAN:
 			if (_view == null)
