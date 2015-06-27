@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class SokobanActor extends Actor {
 
-	protected static final int SIZE = 32;
+	public static final int SIZE = 32;
 
 	private Texture _texture = createTexture(Color.RED);
 

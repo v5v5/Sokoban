@@ -9,15 +9,17 @@ import v5.game.sokoban.model.dynamicObjects.ManObject;
 import v5.game.sokoban.view.View;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class SokobanView extends View {
 
+	Stage _stage;
+	
 	SokobanActor[][] _field;
 	SokobanActor _man;
 	SokobanActor[] _boxes;
 
-	Stage _stage;
-
+	
 	final int SIZE = SokobanActor.SIZE;
 
 	public SokobanView(Stage stage) {
@@ -28,6 +30,41 @@ public class SokobanView extends View {
 		this.createField(state);
 		this.createMan(state);
 		this.createBoxes(state);		
+	}
+
+	public void draw(State state) {
+		drawField(state);
+		drawMan(state);
+		drawBoxes(state);
+	}
+
+	private void drawBoxes(State state) {
+		ArrayList<BoxObject> boxes = state.getBoxes();
+
+		int i = 0;
+		int row;
+		int col;
+
+		for (BoxObject box : boxes) {
+			row = box.getRow();
+			col = box.getCol();
+			_boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+			i++;
+		}
+	}
+
+	private void drawMan(State state) {
+		ManObject m = state.getMan();
+//		_man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
+		_man.addAction(Actions.moveTo(m.getCol() * SIZE, m.getRow() * SIZE, 0.5f));
+	}
+
+	private void drawField(State state) {
+		for (int row = 0; row < _field.length; row++) {
+			for (int col = 0; col < _field[row].length; col++) {
+				_field[row][col].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+			}
+		}
 	}
 
 	private void createBoxes(State state) {
@@ -83,38 +120,8 @@ public class SokobanView extends View {
 		}
 	}
 
-	public void draw(State state) {
-		drawField(state);
-		drawMan(state);
-		drawBoxes(state);
-	}
-
-	private void drawBoxes(State state) {
-		ArrayList<BoxObject> boxes = state.getBoxes();
-
-		int i = 0;
-		int row;
-		int col;
-
-		for (BoxObject box : boxes) {
-			row = box.getRow();
-			col = box.getCol();
-			_boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
-			i++;
-		}
-	}
-
-	private void drawMan(State state) {
-		ManObject m = state.getMan();
-		_man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
-	}
-
-	private void drawField(State state) {
-		for (int row = 0; row < _field.length; row++) {
-			for (int col = 0; col < _field[row].length; col++) {
-				_field[row][col].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
-			}
-		}
+	public SokobanActor get_man() {
+		return _man;
 	}
 
 }

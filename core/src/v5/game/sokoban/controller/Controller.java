@@ -1,5 +1,6 @@
 package v5.game.sokoban.controller;
 
+import v5.game.sokoban.SokobanActor;
 import v5.game.sokoban.model.Model;
 import v5.game.sokoban.model.ModelListener;
 import v5.game.sokoban.model.State;
@@ -10,6 +11,8 @@ public class Controller implements ModelListener {
 
 	private Model _model;
 	private View _view;
+		
+	final int SIZE = SokobanActor.SIZE;
 
 	public Controller() {
 		_model = new Model();
@@ -31,7 +34,7 @@ public class Controller implements ModelListener {
 	public void repaintView() {
 		try {
 			State state = _model.getLogic().getState();
-			this.onChange(Event.UPDATE, state);
+			this.onChange(Event.MOVE_MAN, state);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,7 +52,7 @@ public class Controller implements ModelListener {
 				return;
 			_view.createActors(state);
 			break;
-		case UPDATE:
+		case MOVE_MAN:
 			if (_view == null)
 				return;
 			_view.draw(state);
@@ -66,5 +69,6 @@ public class Controller implements ModelListener {
 		}
 
 	}
+
 
 }

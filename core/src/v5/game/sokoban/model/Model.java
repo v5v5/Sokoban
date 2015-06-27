@@ -38,7 +38,7 @@ public class Model implements ModelInterface {
 			if (_logic._state._gameOver) {
 				fireChangedEvent(Event.GAME_OVER);
 			} else {
-				fireChangedEvent(Event.UPDATE);
+				fireChangedEvent(Event.MOVE_MAN);
 			}
 		}
 		return b;
