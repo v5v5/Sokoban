@@ -1,13 +1,21 @@
 package v5.game.sokoban.view;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import v5.game.sokoban.model.ModelListener.Event;
 import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Unit;
 import v5.game.sokoban.model.dynamicObjects.BoxObject;
 import v5.game.sokoban.model.dynamicObjects.ManObject;
 
 public class View {
+	
+	protected LinkedList<Event> _events;
+
+	public View(LinkedList<Event> events) {
+		_events = events;
+	}
 
 	public void draw(State state) {
 		drawField(state.getField());
@@ -79,7 +87,7 @@ public class View {
 		g = graphics;
 	}
 
-	public void createActors(State state) {
+	public void init(State state) {
 		g.fillRect(0, 0, 20 * BOX_SIZE, 20 * BOX_SIZE, 0);
 	}
 

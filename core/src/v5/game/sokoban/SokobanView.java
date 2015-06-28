@@ -1,7 +1,9 @@
 package v5.game.sokoban;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import v5.game.sokoban.model.ModelListener.Event;
 import v5.game.sokoban.model.State;
 import v5.game.sokoban.model.T.Unit;
 import v5.game.sokoban.model.dynamicObjects.BoxObject;
@@ -18,22 +20,39 @@ public class SokobanView extends View {
 	SokobanActor[][] _field;
 	SokobanActor _man;
 	SokobanActor[] _boxes;
-
 	
 	final int SIZE = SokobanActor.SIZE;
 
-	public SokobanView(Stage stage) {
+	public SokobanView(Stage stage, LinkedList<Event> events) {
+		super(events);
 		_stage = stage;
 	}
 
-	public void createActors(State state) {
-		_stage.getRoot().clearChildren();
-		this.createField(state);
-		this.createMan(state);
-		this.createBoxes(state);		
+	public void init(State state) {
+//		_stage.getRoot().clearChildren();
+//		this.createField(state);
+//		this.createMan(state);
+//		this.createBoxes(state);		
 	}
 
 	public void draw(State state) {
+		Event event = _events.remove();
+		switch (event) {
+		case NEW_GAME:
+			_stage.getRoot().clearChildren();
+			this.createField(state);
+			this.createMan(state);
+			this.createBoxes(state);		
+			break;
+		case MOVE_MAN:
+			break;
+		case GAME_OVER:
+			System.out.println("SokobanView.draw(): You Winner!");
+			break;
+		default:
+			break;
+		}
+		
 		drawField(state);
 		drawMan(state);
 		drawBoxes(state);

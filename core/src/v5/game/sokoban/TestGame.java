@@ -72,7 +72,7 @@ public class TestGame {
 		// create output data stream
 		final Graphics2D graphics = (Graphics2D) frame.getGraphics();
 
-		View view = new View();
+		View view = new View(controller.getEvents());
 		view.setGraphics(new Graphics() {
 
 			@Override

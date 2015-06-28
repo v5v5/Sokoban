@@ -1,5 +1,7 @@
 package v5.game.sokoban.controller;
 
+import java.util.LinkedList;
+
 import v5.game.sokoban.SokobanActor;
 import v5.game.sokoban.model.Model;
 import v5.game.sokoban.model.ModelListener;
@@ -12,6 +14,8 @@ public class Controller implements ModelListener {
 	private Model _model;
 	private View _view;
 		
+	private LinkedList<Event> events = new LinkedList<Event>();
+	
 	final int SIZE = SokobanActor.SIZE;
 
 	public Controller() {
@@ -21,6 +25,10 @@ public class Controller implements ModelListener {
 
 	public boolean moveMan(Direction direction) {
 		return _model.moveMan(direction);
+	}
+
+	public LinkedList<Event> getEvents() {
+		return events;
 	}
 
 	public void setView(View view) {
@@ -45,31 +53,29 @@ public class Controller implements ModelListener {
 	}
 
 	@Override
-	public void onChange(Event event, State state) {
-		// TODO create queue of events and add event to queue
-		// and view run on process queue
+	public void onChange(Event event, State state) {		
+		events.add(event);
+
 		switch (event) {
 		case NEW_GAME:
 			if (_view == null)
 				return;
-			_view.createActors(state);
-			_view.draw(state);
+			_view.init(state);
 			break;
 		case MOVE_MAN:
-			if (_view == null)
-				return;
-			_view.draw(state);
 			break;
 		case GAME_OVER:
-			System.err.println("Game Over!");
-			if (_view == null)
-				return;
-			_view.draw(state);
-
+			System.out.println("Controller.onChange(): You Winner!");
 			break;
 		default:
 			break;
 		}
+
+		if (_view == null)
+			return;
+		_view.draw(state);
+
+		events.clear();
 
 	}
 

@@ -31,7 +31,7 @@ public class SokobanStage extends Stage {
 
 		final Controller controller = new Controller();
 
-		View view = new SokobanView(this);
+		View view = new SokobanView(this, controller.getEvents());
 
 		controller.setView(view);
 
