@@ -12,50 +12,69 @@ import v5.game.sokoban.view.View;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class SokobanView extends View {
 
 	Stage _stage;
-	
+
 	SokobanActor[][] _field;
 	SokobanActor _man;
 	SokobanActor[] _boxes;
-	
+	Label label = SokobanActor.createLabel();
+
 	final int SIZE = SokobanActor.SIZE;
 
+	final String TEXT_WINNER = "You Winner!\n";
+	final String TEXT_MENU = "press \"1\" - load map 1\npress \"2\" - load map 2\npress \"3\" - load map 3 ";
+	
 	public SokobanView(Stage stage, LinkedList<Event> events) {
 		super(events);
 		_stage = stage;
 	}
 
+	@Override
 	public void init(State state) {
-//		_stage.getRoot().clearChildren();
-//		this.createField(state);
-//		this.createMan(state);
-//		this.createBoxes(state);		
-	}
-
-	public void draw(State state) {
-		Event event = _events.remove();
-		switch (event) {
-		case NEW_GAME:
-			_stage.getRoot().clearChildren();
-			this.createField(state);
-			this.createMan(state);
-			this.createBoxes(state);		
-			break;
-		case MOVE_MAN:
-			break;
-		case GAME_OVER:
-			System.out.println("SokobanView.draw(): You Winner!");
-			break;
-		default:
-			break;
-		}
+		// _stage.getRoot().clearChildren();
+		// this.createField(state);
+		// this.createMan(state);
+		// this.createBoxes(state);
 		
-		drawField(state);
-		drawMan(state);
-		drawBoxes(state);
+		label.setPosition(32, 64);
+		drawLabel(TEXT_MENU);
+	}
+	
+	@Override
+	public void draw(State state) {
+		Event event;
+		while (!_events.isEmpty()) {
+			event = _events.remove();
+			switch (event) {
+			case NEW_GAME:
+				_stage.getRoot().clearChildren();
+				this.createField(state);
+				this.createMan(state);
+				this.createBoxes(state);
+				drawField(state);
+
+				_stage.addActor(label);
+				drawLabel("");
+				break;
+			case MOVE_MAN:
+				drawLabel("");
+				break;
+			case GAME_OVER:
+				System.out.println("SokobanView.draw(): You Winner!");
+				label.setPosition(32, 64);
+				drawLabel(TEXT_WINNER + TEXT_MENU);
+				break;
+			default:
+				break;
+			}
+
+			drawMan(state);
+			drawBoxes(state);
+		}
 	}
 
 	private void drawBoxes(State state) {
@@ -68,7 +87,7 @@ public class SokobanView extends View {
 		for (BoxObject box : boxes) {
 			row = box.getRow();
 			col = box.getCol();
-//			_boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+			// _boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
 			_boxes[i].addAction(Actions.moveTo(col * SIZE, row * SIZE, 0.5f));
 			i++;
 		}
@@ -76,8 +95,9 @@ public class SokobanView extends View {
 
 	private void drawMan(State state) {
 		ManObject m = state.getMan();
-//		_man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
-		_man.addAction(Actions.moveTo(m.getCol() * SIZE, m.getRow() * SIZE, 0.5f));
+		// _man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
+		_man.addAction(Actions.moveTo(m.getCol() * SIZE, m.getRow() * SIZE,
+				0.5f));
 	}
 
 	private void drawField(State state) {
@@ -140,5 +160,9 @@ public class SokobanView extends View {
 			}
 		}
 	}
-
+	
+	private void drawLabel(String text) {
+		label.setText(text);	
+	}
+	
 }

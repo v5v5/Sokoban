@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public class SokobanActor extends Actor {
 
@@ -68,6 +71,14 @@ public class SokobanActor extends Actor {
 		SokobanActor a = new SokobanActor();
 //		a._texture = createTexture(Color.BLUE);
 		a._texture = new Texture(Gdx.files.internal("box.png"));
+		return a;
+	}
+	
+	public static Label createLabel() {
+		BitmapFont bf = new BitmapFont(true);
+		LabelStyle ls = new LabelStyle(bf, Color.WHITE);
+		Label a = new Label("", ls);
+		a.setFontScale(1.5f);
 		return a;
 	}
 }

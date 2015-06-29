@@ -35,10 +35,9 @@ public class Model implements ModelInterface {
 	public boolean moveMan(Direction direction) {
 		boolean b = _logic.moveMan(direction);
 		if (b) {
+			fireChangedEvent(Event.MOVE_MAN);
 			if (_logic._state._gameOver) {
 				fireChangedEvent(Event.GAME_OVER);
-			} else {
-				fireChangedEvent(Event.MOVE_MAN);
 			}
 		}
 		return b;
