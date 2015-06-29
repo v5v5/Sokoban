@@ -58,8 +58,9 @@ public class Controller implements ModelListener {
 
 		switch (event) {
 		case NEW_GAME:
-			if (_view == null)
+			if (_view == null) {
 				return;
+			}
 			_view.init(state);
 			break;
 		case MOVE_MAN:
@@ -71,12 +72,17 @@ public class Controller implements ModelListener {
 			break;
 		}
 
-		if (_view == null)
+		if (_view == null) {
 			return;
+		}
 		_view.draw(state);
 
-		events.clear();
-
+//		events.clear();
+	}
+	
+	public void init() {
+		this.setFieldDefault();
+		_view.init(_model.getLogic().getState());
 	}
 
 

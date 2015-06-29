@@ -69,12 +69,13 @@ public class SokobanStage extends Stage {
 
 		});
 
-		controller.setFieldDefault();
+		controller.init();
 	}
 	
 	
 ////	private float runTime;
 //
+	@Override
 	public void draw() {
 ////		System.out.println("stage draw");
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
