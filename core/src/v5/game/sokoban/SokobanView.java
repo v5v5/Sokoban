@@ -12,6 +12,7 @@ import v5.game.sokoban.view.View;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class SokobanView extends View {
@@ -62,18 +63,25 @@ public class SokobanView extends View {
 				break;
 			case MOVE_MAN:
 				drawLabel("");
+				drawMan(state);
+				drawBoxes(state);
 				break;
 			case GAME_OVER:
-				System.out.println("SokobanView.draw(): You Winner!");
-				label.setPosition(32, 64);
-				drawLabel(TEXT_WINNER + TEXT_MENU);
+				RunnableAction ra = new RunnableAction() {
+					@Override
+					public boolean act(float delta) {
+						System.out.println("SokobanView.draw(): You Winner!");
+						label.setPosition(32, 64);
+						drawLabel(TEXT_WINNER + TEXT_MENU);
+						return true;
+					}
+				};
+				_man.addAction(Actions.after(ra));
+
 				break;
 			default:
 				break;
 			}
-
-			drawMan(state);
-			drawBoxes(state);
 		}
 	}
 

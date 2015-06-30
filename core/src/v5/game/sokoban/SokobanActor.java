@@ -78,7 +78,7 @@ public class SokobanActor extends Actor {
 		BitmapFont bf = new BitmapFont(true);
 		LabelStyle ls = new LabelStyle(bf, Color.WHITE);
 		Label a = new Label("", ls);
-		a.setFontScale(1.5f);
+		a.setFontScale(1.2f);
 		return a;
 	}
 }
