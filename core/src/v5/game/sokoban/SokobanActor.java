@@ -1,6 +1,7 @@
 package v5.game.sokoban;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -59,7 +60,8 @@ public class SokobanActor extends Actor {
 	}
 
 	public static SokobanActor createMan() {
-		SokobanActor a = new SokobanActor();
+		SokobanActor a = new SokobanActor() {
+		};
 //		a._texture = createTexture(Color.GREEN);
 		a._texture = new Texture(Gdx.files.internal("player.png"));
 		a.setOrigin(SIZE / 2, SIZE / 2);		
@@ -71,14 +73,21 @@ public class SokobanActor extends Actor {
 		SokobanActor a = new SokobanActor();
 //		a._texture = createTexture(Color.BLUE);
 		a._texture = new Texture(Gdx.files.internal("box.png"));
+		a.setOrigin(SIZE / 2, SIZE / 2);		
 		return a;
 	}
 	
 	public static Label createLabel() {
+//		BitmapFont bf = new BitmapFont(Gdx.files.internal("BernerBasisschrift1.ttf"), true);
+//		FileHandle fontFile = Gdx.files.internal("BernerBasisschrift1.ttf");
+
 		BitmapFont bf = new BitmapFont(true);
-		LabelStyle ls = new LabelStyle(bf, Color.WHITE);
+		LabelStyle ls = new LabelStyle(bf, Color.BLUE);
 		Label a = new Label("", ls);
-		a.setFontScale(1.2f);
+		a.scaleBy(3);
+//		a.setColor(Color.GRAY);
+//		a.setFontScale(1.2f);
+
 		return a;
 	}
 }

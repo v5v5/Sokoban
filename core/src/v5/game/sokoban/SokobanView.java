@@ -10,6 +10,7 @@ import v5.game.sokoban.model.dynamicObjects.BoxObject;
 import v5.game.sokoban.model.dynamicObjects.ManObject;
 import v5.game.sokoban.view.View;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
@@ -26,9 +27,10 @@ public class SokobanView extends View {
 
 	final int SIZE = SokobanActor.SIZE;
 
+	final String TEXT_GAMENAME = "SOKOBAN\n";
 	final String TEXT_WINNER = "You Winner!\n";
-	final String TEXT_MENU = "press \"1\" - load map 1\npress \"2\" - load map 2\npress \"3\" - load map 3 ";
-	
+	final String TEXT_MENU = "press \"1\"..\"3\" for load map";
+
 	public SokobanView(Stage stage, LinkedList<Event> events) {
 		super(events);
 		_stage = stage;
@@ -40,11 +42,14 @@ public class SokobanView extends View {
 		// this.createField(state);
 		// this.createMan(state);
 		// this.createBoxes(state);
-		
+
 		label.setPosition(32, 64);
-		drawLabel(TEXT_MENU);
+		drawLabel(TEXT_GAMENAME + TEXT_MENU);
 	}
-	
+
+	static int offsetX;
+	static int offsetY;
+
 	@Override
 	public void draw(State state) {
 		Event event;
@@ -53,16 +58,25 @@ public class SokobanView extends View {
 			switch (event) {
 			case NEW_GAME:
 				_stage.getRoot().clearChildren();
+
+				// offsetY = (int) ((_stage.getHeight() -
+				// state.getField().length * SIZE) / 2);
+				// offsetX = (int) ((_stage.getHeight() -
+				// state.getField()[0].length * SIZE) / 2);
+
 				this.createField(state);
 				this.createMan(state);
 				this.createBoxes(state);
+
 				drawField(state);
+				drawMan(state);
+				drawBoxes(state);
 
 				_stage.addActor(label);
 				drawLabel("");
 				break;
 			case MOVE_MAN:
-				drawLabel("");
+				// drawLabel("");
 				drawMan(state);
 				drawBoxes(state);
 				break;
@@ -72,11 +86,17 @@ public class SokobanView extends View {
 					public boolean act(float delta) {
 						System.out.println("SokobanView.draw(): You Winner!");
 						label.setPosition(32, 64);
-						drawLabel(TEXT_WINNER + TEXT_MENU);
+						drawLabel(TEXT_GAMENAME + TEXT_WINNER + TEXT_MENU);
 						return true;
 					}
 				};
-				_man.addAction(Actions.after(ra));
+				_man.addAction(Actions.after(Actions.sequence(ra,
+						Actions.rotateTo(540, 0.7f))));
+
+				for (int i = 0; i < _boxes.length; i++) {
+					_boxes[i].addAction(Actions.after(Actions.scaleTo(0, 0,
+							0.7f)));
+				}
 
 				break;
 			default:
@@ -93,10 +113,22 @@ public class SokobanView extends View {
 		int col;
 
 		for (BoxObject box : boxes) {
+			
 			row = box.getRow();
 			col = box.getCol();
-			// _boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
-			_boxes[i].addAction(Actions.moveTo(col * SIZE, row * SIZE, 0.5f));
+
+			int x = (int) _boxes[i].getX() / SIZE;
+			int y = (int) _boxes[i].getY() / SIZE;
+			if ((x == col) && (y == row)) {
+				i++;
+				continue;
+			}
+			// _boxes[i].addAction(Actions.moveTo(col * SIZE - offsetX, row *
+			// SIZE
+			// - offsetY, 0.5f));
+			_boxes[i].clearActions();
+			_boxes[i].addAction(Actions.sequence(Actions.parallel(Actions.moveTo(col * SIZE - offsetX, row * SIZE
+					- offsetY, 0.5f), Actions.rotateTo(10, 0.25f)), Actions.rotateTo(0, 0.25f)));
 			i++;
 		}
 	}
@@ -104,14 +136,15 @@ public class SokobanView extends View {
 	private void drawMan(State state) {
 		ManObject m = state.getMan();
 		// _man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
-		_man.addAction(Actions.moveTo(m.getCol() * SIZE, m.getRow() * SIZE,
-				0.5f));
+		_man.addAction(Actions.moveTo(m.getCol() * SIZE - offsetX, m.getRow()
+				* SIZE - offsetY, 0.5f));
 	}
 
 	private void drawField(State state) {
 		for (int row = 0; row < _field.length; row++) {
 			for (int col = 0; col < _field[row].length; col++) {
-				_field[row][col].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+				_field[row][col].setBounds(col * SIZE - offsetX, row * SIZE
+						- offsetY, SIZE, SIZE);
 			}
 		}
 	}
@@ -128,7 +161,8 @@ public class SokobanView extends View {
 			_boxes[i] = SokobanActor.createBox();
 			row = box.getRow();
 			col = box.getCol();
-			_boxes[i].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+			_boxes[i].setBounds(col * SIZE - offsetX, row * SIZE - offsetY,
+					SIZE, SIZE);
 			_stage.addActor(_boxes[i]);
 			i++;
 		}
@@ -138,7 +172,8 @@ public class SokobanView extends View {
 		_man = SokobanActor.createMan();
 
 		ManObject m = state.getMan();
-		_man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
+		_man.setBounds(m.getCol() * SIZE - offsetX,
+				m.getRow() * SIZE - offsetY, SIZE, SIZE);
 		_stage.addActor(_man);
 	}
 
@@ -163,14 +198,15 @@ public class SokobanView extends View {
 						break;
 					}
 				}
-				_field[row][col].setBounds(col * SIZE, row * SIZE, SIZE, SIZE);
+				_field[row][col].setBounds(col * SIZE - offsetX, row * SIZE
+						- offsetY, SIZE, SIZE);
 				_stage.addActor(_field[row][col]);
 			}
 		}
 	}
-	
+
 	private void drawLabel(String text) {
-		label.setText(text);	
+		label.setText(text);
 	}
-	
+
 }
