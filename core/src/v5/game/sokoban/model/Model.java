@@ -57,4 +57,9 @@ public class Model implements ModelInterface {
 		return b;
 	}
 
+	public void init() {
+		_logic.getState().setField(20, 20);
+		fireChangedEvent(Event.INIT);
+	}
+
 }

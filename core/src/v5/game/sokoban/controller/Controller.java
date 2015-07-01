@@ -57,6 +57,8 @@ public class Controller implements ModelListener {
 		events.add(event);
 
 		switch (event) {
+		case INIT:
+			break;
 		case NEW_GAME:
 			if (_view == null) {
 				return;
@@ -81,8 +83,9 @@ public class Controller implements ModelListener {
 	}
 	
 	public void init() {
-		this.setFieldDefault();
-		_view.init(_model.getLogic().getState());
+		_model.init();
+//		this.setFieldDefault();
+//		_view.init(_model.getLogic().getState());
 	}
 
 

@@ -10,6 +10,7 @@ import v5.game.sokoban.model.dynamicObjects.BoxObject;
 import v5.game.sokoban.model.dynamicObjects.ManObject;
 import v5.game.sokoban.view.View;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -43,8 +44,8 @@ public class SokobanView extends View {
 		// this.createMan(state);
 		// this.createBoxes(state);
 
-		label.setPosition(32, 64);
-		drawLabel(TEXT_GAMENAME + TEXT_MENU);
+//		label.setPosition(32, 64);
+//		drawLabel(TEXT_GAMENAME + TEXT_MENU);
 	}
 
 	static int offsetX;
@@ -56,6 +57,15 @@ public class SokobanView extends View {
 		while (!_events.isEmpty()) {
 			event = _events.remove();
 			switch (event) {
+			case INIT:
+				_stage.getRoot().clearChildren();
+				this.createField(state);
+				drawField(state);
+				drawLabel(TEXT_GAMENAME + TEXT_MENU);
+				label.setPosition(32, 64);
+				_stage.addActor(label);
+				drawInit();
+				break;
 			case NEW_GAME:
 				_stage.getRoot().clearChildren();
 
@@ -72,8 +82,8 @@ public class SokobanView extends View {
 				drawMan(state);
 				drawBoxes(state);
 
-				_stage.addActor(label);
 				drawLabel("");
+				_stage.addActor(label);				
 				break;
 			case MOVE_MAN:
 				// drawLabel("");
@@ -86,7 +96,8 @@ public class SokobanView extends View {
 					public boolean act(float delta) {
 						System.out.println("SokobanView.draw(): You Winner!");
 						label.setPosition(32, 64);
-						drawLabel(TEXT_GAMENAME + TEXT_WINNER + TEXT_MENU);
+						label.setColor(Color.WHITE);
+						drawLabel(TEXT_WINNER);
 						return true;
 					}
 				};
@@ -103,6 +114,27 @@ public class SokobanView extends View {
 				break;
 			}
 		}
+	}
+
+	private void drawInit() {
+		_man = SokobanActor.createMan();
+		_stage.addActor(_man);
+		
+		_man.setBounds(10, 200, 32, 32);
+
+		Action a00 = Actions.moveTo(200, 200, 1);
+		Action a01 = Actions.rotateBy(30, 1);		
+		
+		Action a10 = Actions.moveTo(10, 250, 1);
+		Action a11 = Actions.rotateBy(-30, 1);		
+
+		Action a0 = Actions.parallel(a00, a01);
+		Action a1 = Actions.parallel(a10, a11);
+		
+		Action a = Actions.repeat(-1, Actions.sequence(a0, a1));
+//		Action a = Actions.repeat(20, Actions.sequence(a0, a1));
+		
+		_man.addAction(a);
 	}
 
 	private void drawBoxes(State state) {

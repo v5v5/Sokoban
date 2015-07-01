@@ -5,7 +5,6 @@ import v5.game.sokoban.view.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -62,6 +61,9 @@ public class SokobanStage extends Stage {
 					break;
 				case Input.Keys.NUM_3:
 					controller.loadField(2);
+					break;
+				case Input.Keys.ESCAPE:
+					controller.init();
 					break;
 				}
 				return true;
