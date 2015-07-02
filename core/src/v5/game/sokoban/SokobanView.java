@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
@@ -44,8 +45,8 @@ public class SokobanView extends View {
 		// this.createMan(state);
 		// this.createBoxes(state);
 
-//		label.setPosition(32, 64);
-//		drawLabel(TEXT_GAMENAME + TEXT_MENU);
+		// label.setPosition(SIZE, SIZE);
+		// drawLabel(TEXT_GAMENAME + TEXT_MENU);
 	}
 
 	static int offsetX;
@@ -57,22 +58,26 @@ public class SokobanView extends View {
 		while (!_events.isEmpty()) {
 			event = _events.remove();
 			switch (event) {
-			case INIT:
+			case SHOW_MENU:
 				_stage.getRoot().clearChildren();
+
+				offsetX = 0;
+				offsetY = 0;
+
 				this.createField(state);
 				drawField(state);
 				drawLabel(TEXT_GAMENAME + TEXT_MENU);
-				label.setPosition(32, 64);
+				label.setPosition(SIZE, SIZE);
 				_stage.addActor(label);
-				drawInit();
+				drawMenu();
 				break;
 			case NEW_GAME:
 				_stage.getRoot().clearChildren();
 
-				// offsetY = (int) ((_stage.getHeight() -
-				// state.getField().length * SIZE) / 2);
-				// offsetX = (int) ((_stage.getHeight() -
-				// state.getField()[0].length * SIZE) / 2);
+				offsetX = (int) ((_stage.getWidth() - state.getField()[0].length
+						* SIZE) / 2);
+				offsetY = (int) ((_stage.getHeight() - state.getField().length
+						* SIZE) / 2);
 
 				this.createField(state);
 				this.createMan(state);
@@ -83,7 +88,7 @@ public class SokobanView extends View {
 				drawBoxes(state);
 
 				drawLabel("");
-				_stage.addActor(label);				
+				_stage.addActor(label);
 				break;
 			case MOVE_MAN:
 				// drawLabel("");
@@ -95,9 +100,9 @@ public class SokobanView extends View {
 					@Override
 					public boolean act(float delta) {
 						System.out.println("SokobanView.draw(): You Winner!");
-						label.setPosition(32, 64);
+						label.setPosition(SIZE, SIZE);
 						label.setColor(Color.WHITE);
-						drawLabel(TEXT_WINNER);
+						drawLabel(TEXT_WINNER + TEXT_MENU);
 						return true;
 					}
 				};
@@ -116,25 +121,81 @@ public class SokobanView extends View {
 		}
 	}
 
-	private void drawInit() {
+	private void drawMenu() {
+		final int S = SokobanActor.SIZE;
+		final int cX = 300;//offsetX;// 300;
+		final int cY = 220;//offsetY;// 220;
+		final float t = 0.6f;
+		final float s = 1.0f;
+
+		// center box
+		SokobanActor box = SokobanActor.createBox();
+		_stage.addActor(box);
+		box.setBounds(cX, cY, S, S);
+		box.addAction(Actions.repeat(RepeatAction.FOREVER,
+				Actions.rotateBy(-30, 1)));
+
+		// box coordinates
+		int b[][] = { { -150, -60 }, { -50, +160 }, { 100, 100 } };
+
+		for (int i = 0; i < b.length; i++) {
+			box = SokobanActor.createBox();
+			_stage.addActor(box);
+			box.setBounds(cX + b[i][0], cY + b[i][1], S, S);
+		}
+
+		// wall coordinates
+		int w[][] = { { 150, -60 } };
+		SokobanActor wall;
+		for (int i = 0; i < w.length; i++) {
+			wall = SokobanActor.createFieldWall();
+			_stage.addActor(wall);
+			wall.setBounds(cX + w[i][0], cY + w[i][1], S, S);
+		}
+
+		// man actions
+		Action a[] = new Action[6];
+
 		_man = SokobanActor.createMan();
 		_stage.addActor(_man);
-		
-		_man.setBounds(10, 200, 32, 32);
+		_man.setBounds(cX - s * 50, cY - s * 100, S, S);
+		a[0] = Actions.moveTo(cX + s * 25, cY - s * 50, t);
+		a[1] = Actions.moveTo(cX + s * 75, cY + s * 50, t);
+		a[2] = Actions.moveTo(cX + s * 50, cY + s * 100, t);
+		a[3] = Actions.moveTo(cX - s * 50, cY + s * 50, t);
+		a[4] = Actions.moveTo(cX - s * 75, cY - s * 25, t);
+		a[5] = Actions.moveTo(cX - s * 50, cY - s * 100, t);
+		_man.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(a)));
 
-		Action a00 = Actions.moveTo(200, 200, 1);
-		Action a01 = Actions.rotateBy(30, 1);		
-		
-		Action a10 = Actions.moveTo(10, 250, 1);
-		Action a11 = Actions.rotateBy(-30, 1);		
+		_man = SokobanActor.createMan();
+		_stage.addActor(_man);
+		_man.setBounds(cX - s * 50, cY + s * 100, S, S);
+		a[0] = Actions.moveTo(cX - s * 75, cY - s * 0, t);
+		a[1] = Actions.moveTo(cX - s * 0, cY - s * 50, t);
+		a[2] = Actions.moveTo(cX + s * 50, cY - s * 50, t);
+		a[3] = Actions.moveTo(cX + s * 50, cY + s * 0, t);
+		a[4] = Actions.moveTo(cX + s * 25, cY + s * 50, t);
+		a[5] = Actions.moveTo(cX - s * 50, cY + s * 100, t);
+		_man.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(a)));
 
-		Action a0 = Actions.parallel(a00, a01);
-		Action a1 = Actions.parallel(a10, a11);
-		
-		Action a = Actions.repeat(-1, Actions.sequence(a0, a1));
-//		Action a = Actions.repeat(20, Actions.sequence(a0, a1));
-		
-		_man.addAction(a);
+		_man = SokobanActor.createMan();
+		_stage.addActor(_man);
+		_man.setBounds(cX + s * 150, cY - s * 0, S, S);
+		a[0] = Actions.moveTo(cX + s * 50, cY + s * 50, t);
+		a[1] = Actions.moveTo(cX - s * 50, cY + s * 50, t);
+		a[2] = Actions.moveTo(cX - s * 150, cY + s * 0, t);
+		a[3] = Actions.moveTo(cX - s * 50, cY - s * 50, t);
+		a[4] = Actions.moveTo(cX + s * 50, cY - s * 50, t);
+		a[5] = Actions.moveTo(cX + s * 150, cY - s * 0, t);
+		_man.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(a)));
+
+		_man = SokobanActor.createMan();
+		_stage.addActor(_man);
+		_man.setOrigin(-1 * S, 0);
+		_man.setBounds(cX - s * 200, cY - s * 0, S, S);
+		_man.addAction(Actions.repeat(RepeatAction.FOREVER,
+				Actions.rotateBy(100, 2)));
+
 	}
 
 	private void drawBoxes(State state) {
@@ -145,22 +206,23 @@ public class SokobanView extends View {
 		int col;
 
 		for (BoxObject box : boxes) {
-			
+
 			row = box.getRow();
 			col = box.getCol();
 
-			int x = (int) _boxes[i].getX() / SIZE;
-			int y = (int) _boxes[i].getY() / SIZE;
+			int x = (int) (_boxes[i].getX() - offsetX) / SIZE;
+			int y = (int) (_boxes[i].getY() - offsetY) / SIZE;
 			if ((x == col) && (y == row)) {
 				i++;
 				continue;
 			}
-			// _boxes[i].addAction(Actions.moveTo(col * SIZE - offsetX, row *
-			// SIZE
-			// - offsetY, 0.5f));
 			_boxes[i].clearActions();
-			_boxes[i].addAction(Actions.sequence(Actions.parallel(Actions.moveTo(col * SIZE - offsetX, row * SIZE
-					- offsetY, 0.5f), Actions.rotateTo(10, 0.25f)), Actions.rotateTo(0, 0.25f)));
+			_boxes[i].addAction(Actions.sequence(
+					Actions.parallel(
+							Actions.moveTo(col * SIZE + offsetX, row * SIZE
+									+ offsetY, 0.5f),
+							Actions.rotateTo(10, 0.25f)),
+					Actions.rotateTo(0, 0.25f)));
 			i++;
 		}
 	}
@@ -168,15 +230,15 @@ public class SokobanView extends View {
 	private void drawMan(State state) {
 		ManObject m = state.getMan();
 		// _man.setBounds(m.getCol() * SIZE, m.getRow() * SIZE, SIZE, SIZE);
-		_man.addAction(Actions.moveTo(m.getCol() * SIZE - offsetX, m.getRow()
-				* SIZE - offsetY, 0.5f));
+		_man.addAction(Actions.moveTo(m.getCol() * SIZE + offsetX, m.getRow()
+				* SIZE + offsetY, 0.5f));
 	}
 
 	private void drawField(State state) {
 		for (int row = 0; row < _field.length; row++) {
 			for (int col = 0; col < _field[row].length; col++) {
-				_field[row][col].setBounds(col * SIZE - offsetX, row * SIZE
-						- offsetY, SIZE, SIZE);
+				_field[row][col].setBounds(col * SIZE + offsetX, row * SIZE
+						+ offsetY, SIZE, SIZE);
 			}
 		}
 	}
@@ -193,7 +255,7 @@ public class SokobanView extends View {
 			_boxes[i] = SokobanActor.createBox();
 			row = box.getRow();
 			col = box.getCol();
-			_boxes[i].setBounds(col * SIZE - offsetX, row * SIZE - offsetY,
+			_boxes[i].setBounds(col * SIZE + offsetX, row * SIZE + offsetY,
 					SIZE, SIZE);
 			_stage.addActor(_boxes[i]);
 			i++;
@@ -204,8 +266,8 @@ public class SokobanView extends View {
 		_man = SokobanActor.createMan();
 
 		ManObject m = state.getMan();
-		_man.setBounds(m.getCol() * SIZE - offsetX,
-				m.getRow() * SIZE - offsetY, SIZE, SIZE);
+		_man.setBounds(m.getCol() * SIZE + offsetX,
+				m.getRow() * SIZE + offsetY, SIZE, SIZE);
 		_stage.addActor(_man);
 	}
 
@@ -230,8 +292,8 @@ public class SokobanView extends View {
 						break;
 					}
 				}
-				_field[row][col].setBounds(col * SIZE - offsetX, row * SIZE
-						- offsetY, SIZE, SIZE);
+				_field[row][col].setBounds(col * SIZE + offsetX, row * SIZE
+						+ offsetY, SIZE, SIZE);
 				_stage.addActor(_field[row][col]);
 			}
 		}

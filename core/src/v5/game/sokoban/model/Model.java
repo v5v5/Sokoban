@@ -59,7 +59,7 @@ public class Model implements ModelInterface {
 
 	public void init() {
 		_logic.getState().setField(20, 20);
-		fireChangedEvent(Event.INIT);
+		fireChangedEvent(Event.SHOW_MENU);
 	}
 
 }

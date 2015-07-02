@@ -63,7 +63,7 @@ public class SokobanStage extends Stage {
 					controller.loadField(2);
 					break;
 				case Input.Keys.ESCAPE:
-					controller.init();
+					controller.showMenu();
 					break;
 				}
 				return true;
@@ -71,7 +71,7 @@ public class SokobanStage extends Stage {
 
 		});
 
-		controller.init();
+		controller.showMenu();
 	}
 	
 }
